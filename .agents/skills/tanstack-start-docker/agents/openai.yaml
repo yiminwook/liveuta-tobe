@@ -1,0 +1,4 @@
+interface:
+  display_name: "TanStack Start Docker"
+  short_description: "Run TanStack Start SSR with local Docker"
+  default_prompt: "Use $tanstack-start-docker to configure and verify this TanStack Start app for local Docker deployment."

@@ -1,0 +1,11 @@
+node_modules
+.output
+.git
+.env
+.env.*
+coverage
+*.log
+.agents
+.codex
+.vscode
+.cursor
