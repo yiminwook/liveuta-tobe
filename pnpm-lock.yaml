@@ -45,8 +45,8 @@ importers:
         specifier: ^12.38.0
         version: 12.43.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       nitro:
-        specifier: 3.0.260903-beta
-        version: 3.0.260903-beta
+        specifier: npm:nitro-nightly@latest
+        version: nitro-nightly@3.0.1-20260904-104602-c5177e92
       react:
         specifier: ^19.2.0
         version: 19.2.8
@@ -2378,8 +2378,8 @@ packages:
   nf3@0.3.24:
     resolution: {integrity: sha512-HxLK4bo+5jNsEETZp4w3tJblHOA9MCBY14IN9nZJJV8JDxt9yNIYxuBuLMjTAR5GFa3HL61+8VQDUrXv3/C8fw==}
 
-  nitro@3.0.260903-beta:
-    resolution: {integrity: sha512-54gANPi62O8rfMvepiJUVuIzEIinYfpeHbebywlLxvVTgIYXDwSvpaU9Id+0sJOBjBx0wC1/CVYXJkH7SY+l0g==}
+  nitro-nightly@3.0.1-20260904-104602-c5177e92:
+    resolution: {integrity: sha512-i/spPI19V+eZbn+oNUNhtGOoUP9kG+JfMlKSU8Dno0D7WOOajqT/K0Py7qMbZGT+2dbCk7n3WllLN/ABs4MQ4Q==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
@@ -5292,7 +5292,7 @@ snapshots:
 
   nf3@0.3.24: {}
 
-  nitro@3.0.260903-beta:
+  nitro-nightly@3.0.1-20260904-104602-c5177e92:
     dependencies:
       consola: 3.4.2
       crossws: 0.4.12(srvx@1.0.3)
