@@ -81,7 +81,7 @@ Cloudflare Tunnel 도입은 선택 사항이며 현재 구현 범위의 필수 �
 7. 모바일 전용 페이지와 데스크탑 전용 페이지가 존재할 수 있다.
 8. 검색 노출이 필요한 페이지는 모바일/데스크탑 각각의 실제 페이지가 필요한 SEO 정보를 서버 렌더링할 수 있게 한다.
 
-## 4. Host 매핑 규칙
+## 4. 호스트 이름 매핑 규칙
 
 ### 운영
 
@@ -108,7 +108,7 @@ Mobile : http://m.localhost:3000
 
 Vite는 기본적으로 `localhost`와 `.localhost` 하위 도메인을 허용하므로 일반적인 환경에서는 `/etc/hosts` 수정이 필요 없다.
 
-## 5. Hostname Resolver
+## 5. 호스트 이름 판별기
 
 App Variant 결정 로직은 한 곳에만 둔다.
 
@@ -154,7 +154,7 @@ export function resolveAppVariant(hostname: string): AppVariant {
 
 실제 도메인이 확정되면 `example.com`을 프로젝트 도메인으로 교체한다.
 
-## 6. TanStack Start 서버 엔트리에서 판별
+## 6. TanStack Start 서버 진입점에서 판별
 
 TanStack Start의 `src/server.ts`는 SSR을 포함한 서버 요청의 진입점이다. 표준 `Request`를 받을 수 있으므로 `new URL(request.url).hostname`을 기준으로 App Variant를 결정한다.
 
@@ -243,7 +243,7 @@ export function getRequestHostname(request: Request) {
 
 우선 구현은 `request.url.hostname`을 사용하고, 실제 Docker/Nginx 환경 통합 테스트에서 문제가 있을 때만 fallback을 추가한다.
 
-## 7. SSR / Hydration 설계
+## 7. 서버 렌더링 및 하이드레이션 설계
 
 잘못된 방식:
 
@@ -393,7 +393,7 @@ if (appVariant !== 'mobile') {
 
 주의: App Variant를 route/component에서 꺼내는 실제 helper 구현은 현재 프로젝트의 router context 구성에 맞춰 하나의 공통 `useAppVariant()` / `getAppVariant()` API로 캡슐화한다. 여러 컴포넌트에서 hostname을 직접 다시 파싱하지 않는다.
 
-## 10. Bundle / Code Splitting
+## 10. 번들 및 코드 분할
 
 모바일과 데스크탑 코드가 크게 다르므로 한 사용자가 양쪽 UI 번들을 모두 받지 않도록 주의한다.
 
@@ -487,7 +487,7 @@ server {
 
 TLS가 Cloudflare에서 종료되는지, origin까지 HTTPS를 사용할지는 실제 인프라 설정에 맞춰 별도로 적용한다.
 
-## 13. Cloudflare Redirect Rules
+## 13. Cloudflare 리디렉션 규칙
 
 Cloudflare의 역할은 **잘못된 디바이스/호스트로 들어온 최초 요청을 적절한 서브도메인으로 보내는 것**이다.
 
@@ -539,13 +539,13 @@ https://m.example.com/articles/123?from=share
 
 또는 preference cookie를 사용해 사용자의 명시적 선택이 Cloudflare 자동 redirect보다 우선하도록 설계할 수 있다.
 
-### Redirect loop 방지
+### 리디렉션 반복 방지
 
 각 Rule은 target hostname 자체를 다시 redirect 대상으로 잡지 않아야 한다.
 
 Cloudflare 공식 모바일 redirect 예제도 `m.example.com`을 조건에서 제외해 루프를 방지한다.
 
-## 14. SEO 정책
+## 14. 검색 엔진 최적화 정책
 
 모바일과 데스크탑은 UI와 페이지 구조가 크게 다르더라도, 동일한 콘텐츠를 표현하는 URL 쌍은 SEO 관계를 명확하게 해야 한다.
 
@@ -565,7 +565,7 @@ Mobile : https://m.example.com/articles/123
 - 모바일 전용 앱형 페이지(`/notifications`, `/profile` 등)는 SEO 대상이 아닐 수 있으므로 CSR 비중을 높여도 된다.
 - 모바일/데스크탑 콘텐츠가 실제로 다르다면 무조건 같은 canonical 관계를 적용하지 말고 페이지별 의도를 정의한다.
 
-## 15. 인증 / Cookie 주의사항
+## 15. 인증 및 쿠키 주의사항
 
 운영 환경에서 `example.com`과 `m.example.com` 간 로그인을 공유해야 한다면 Cookie Domain 전략을 별도로 결정해야 한다.
 
@@ -584,55 +584,55 @@ SameSite=Lax (서비스 요구사항에 따라 조정)
 
 ## 16. 구현 우선순위
 
-### Phase 1 - Host 기반 App Variant
+### 1단계 - 호스트 이름 기반 앱 유형
 
 1. `src/lib/app-variant.ts` 생성
 2. `localhost`, `m.localhost`, 운영 도메인 매핑 작성
 3. `src/server.ts`에서 `request.url.hostname` 판별
 4. request context에 `appVariant`, `hostname` 저장
-5. 공통 `useAppVariant()` 또는 equivalent API 작성
+5. 공통 `useAppVariant()` 또는 이에 준하는 API 작성
 6. root/layout에서 Desktop/Mobile 분기가 SSR 시점에 동작하는지 확인
 
-### Phase 2 - UI 구조 분리
+### 2단계 - 사용자 인터페이스 구조 분리
 
 1. `features/desktop` 생성
 2. `features/mobile` 생성
-3. Desktop layout 분리
-4. Mobile layout + Bottom Tabs 구현
-5. shared API/types/domain 로직 추출
+3. 데스크톱 레이아웃 분리
+4. 모바일 레이아웃 및 하단 탭 구현
+5. 공유 API, 타입, 도메인 로직 추출
 
-### Phase 3 - Route 차이 적용
+### 3단계 - 경로별 차이 적용
 
-1. 공통 route에서 Desktop/Mobile page 분기
-2. Mobile-only route 정책 적용
-3. Desktop-only route 정책 적용
-4. 404/redirect 정책 정의
+1. 공통 경로에서 데스크톱/모바일 페이지 분기
+2. 모바일 전용 경로 정책 적용
+3. 데스크톱 전용 경로 정책 적용
+4. 404 및 리디렉션 정책 정의
 
-### Phase 4 - Code Splitting
+### 4단계 - 코드 분할
 
-1. automatic code splitting 활성화 여부 확인
-2. production build 생성
-3. desktop/mobile initial chunk 분석
-4. 불필요한 반대 variant 코드가 포함되면 lazy split 적용
+1. 자동 코드 분할 활성화 여부 확인
+2. 프로덕션 빌드 생성
+3. 데스크톱/모바일 초기 청크 분석
+4. 불필요한 반대 앱 유형 코드가 포함되면 지연 분할 적용
 
-### Phase 5 - Infra
+### 5단계 - 인프라
 
-1. Nginx에서 세 hostname을 동일 upstream으로 proxy
+1. Nginx에서 세 호스트 이름을 동일한 업스트림으로 프록시
 2. Host 보존 확인
 3. Cloudflare DNS 설정
-4. Cloudflare Redirect Rules 설정
-5. path/query preservation 확인
+4. Cloudflare 리디렉션 규칙 설정
+5. 경로와 쿼리 보존 여부 확인
 
-### Phase 6 - SEO / Auth
+### 6단계 - 검색 엔진 최적화 및 인증
 
-1. 모바일/데스크탑 page title/meta 검증
-2. canonical/alternate 전략 확정
-3. crawler에서 모바일 SSR HTML 확인
-4. cross-subdomain cookie 정책 검증
+1. 모바일/데스크톱 페이지 제목과 메타 정보 검증
+2. 대표 URL 및 대체 페이지 전략 확정
+3. 검색 로봇에서 모바일 서버 렌더링 HTML 확인
+4. 하위 도메인 간 쿠키 정책 검증
 
-## 17. Acceptance Criteria
+## 17. 완료 기준
 
-Codex 구현 완료 조건:
+Codex 구현 완료 기준:
 
 - [ ] `pnpm dev` 한 번으로 서버가 실행된다.
 - [ ] `http://localhost:3000`은 desktop SSR을 반환한다.
@@ -655,26 +655,26 @@ Codex 구현 완료 조건:
 
 ```text
 GET http://localhost:3000/
-Expected: desktop
+예상 결과: 데스크톱
 
 GET http://m.localhost:3000/
-Expected: mobile
+예상 결과: 모바일
 
 GET http://localhost:3000/articles/123
-Expected: DesktopArticlePage
+예상 결과: DesktopArticlePage
 
 GET http://m.localhost:3000/articles/123
-Expected: MobileArticlePage
+예상 결과: MobileArticlePage
 ```
 
 ### 운영
 
 ```text
 GET https://example.com/articles/123
-Expected: Desktop SSR
+예상 결과: 데스크톱 서버 렌더링
 
 GET https://m.example.com/articles/123
-Expected: Mobile SSR
+예상 결과: 모바일 서버 렌더링
 ```
 
 ### Cloudflare
@@ -730,37 +730,43 @@ Codex는 다음 원칙을 지켜 작업한다.
 ## 21. 최종 결정 요약
 
 ```text
-[Deployment]
-TanStack Start: 1 app / 1 build / 1 Docker container
+[배포]
+TanStack Start: 애플리케이션 1개 / 빌드 1개 / Docker 컨테이너 1개
 
-[Production]
-example.com / www.example.com -> desktop
-m.example.com                 -> mobile
+[운영]
+example.com / www.example.com -> 데스크톱
+m.example.com                 -> 모바일
 
-[Development]
-localhost:3000                -> desktop
-m.localhost:3000              -> mobile
+[개발]
+localhost:3000                -> 데스크톱
+m.localhost:3000              -> 모바일
 
-[Variant Source of Truth]
-request hostname
+[앱 유형 판별 기준]
+요청 호스트 이름
 
 [Cloudflare]
 device 기반 최초 hostname redirect
 
 [Nginx]
-동일 upstream proxy + original Host 유지
+동일한 업스트림으로 프록시 + 원래 Host 유지
 
 [TanStack Start]
-hostname을 SSR 단계에서 판별
+서버 렌더링 단계에서 호스트 이름 판별
 
-[UI]
-Desktop / Mobile 강한 분리 허용
+[사용자 인터페이스]
+데스크톱/모바일 화면의 강한 분리 허용
 
-[Shared]
-API / auth / types / domain / loaders 중심
+[공유 항목]
+API / 인증 / 타입 / 도메인 / 데이터 로더 중심
 
-[Important]
-SSR과 hydration에서 동일 variant 사용
-mobile/desktop bundle 분리 확인
-SEO 대상 페이지는 서버 렌더링 유지
+[중요]
+서버 렌더링과 하이드레이션에서 동일한 앱 유형 사용
+모바일/데스크톱 번들 분리 확인
+검색 엔진 최적화 대상 페이지는 서버 렌더링 유지
 ```
+
+## 22. 현재 개발 적용 시점
+
+개발 속도를 높이기 위해 초기 제품 개발은 데스크톱 화면과 단일 도메인을 기준으로 진행한다. 모바일 전용 도메인(`m.example.com`) 라우팅, 호스트 이름 기반 앱 유형 판별, 별도 모바일 UI 및 레이아웃 분리는 제품 개발이 어느 정도 진행된 뒤 후속 TODO로 착수한다.
+
+그때까지는 반응형 레이아웃으로 기본적인 모바일 사용성을 제공한다. 위 1~6단계는 현재 실행 계획이 아닌 향후 검토 및 구현 항목으로 둔다. 모바일 도메인 분리를 시작할 때 이 명세와 마이그레이션 체크리스트를 당시 구현 상태에 맞게 갱신한다.

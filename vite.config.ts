@@ -6,6 +6,7 @@ import { nitro } from "nitro/vite";
 
 import viteReact from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import svgr from "vite-plugin-svgr";
 
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
@@ -14,6 +15,10 @@ const config = defineConfig({
     nitro({ rollupConfig: { external: [/^@sentry\//] } }),
     tailwindcss(),
     tanstackStart(),
+    svgr({
+      // Preserve SVG viewBox values just like the legacy SVGR setup.
+      svgrOptions: { svgo: false },
+    }),
     viteReact(),
   ],
 });
