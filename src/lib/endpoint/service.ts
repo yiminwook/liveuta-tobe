@@ -9,15 +9,17 @@ import {
   POST_CHANNELS,
 } from './config';
 import {
-  TEndpointChannelMetaResponse,
-  TEndpointVideo,
-  TEndpointChannel,
-  TEndpointSearchResponse,
-  TEndpointFeaturedResponse,
-  TChannelDto,
-  TRequestDuplicateCheckResult,
-  TRequestsChannelsResult,
-  TWaitingListItem,
+  type TEndpointChannelMetaResponse,
+  type TEndpointVideo,
+  type TEndpointChannel,
+  type TEndpointSearchResponse,
+  type TEndpointFeaturedResponse,
+  type TChannelDto,
+  type TRequestDuplicateCheckResult,
+  type TRequestsChannelsResult,
+  type TWaitingListItem,
+  type TYChannelReturn,
+  type ChannelDatesetItem,
 } from './type';
 import { addEscapeCharacter } from '@/utils/regexp';
 
@@ -60,7 +62,7 @@ export const searchChannels = (args: {
     .then(({ data }) => data);
 };
 
-export const getChannelWithYoutube = async (dto: TChannelDto) => {
+export const getChannelWithYoutube = async (dto: TChannelDto): TYChannelReturn => {
   const { sort, size, page, query, queryType } = dto;
   const direction = CHANNEL_ORDER_MAP[sort];
 
@@ -98,7 +100,7 @@ export const getChannelWithYoutube = async (dto: TChannelDto) => {
 export const getFeaturedChannels = () =>
   endpointApi.get<TEndpointFeaturedResponse>(GET_FEATURED.index).then(({ data }) => data);
 
-export const parseChannel = (channel: TEndpointChannel | null) => ({
+export const parseChannel = (channel: TEndpointChannel | null): ChannelDatesetItem => ({
   channelId: channel?.channel_id || 'no data',
   channelAddr: channel?.channel_addr || 'no data',
   nameKor: channel?.name_kor || 'no data',

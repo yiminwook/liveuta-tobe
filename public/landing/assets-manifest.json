@@ -1,0 +1,70 @@
+{
+  "collection": "LiveUta Variant A landing illustration assets",
+  "notes": [
+    "AI-generated illustration assets from design studies; characters are fictitious, not real VTubers or official partner artwork.",
+    "Overlay all labels, statistics, links, and buttons in HTML; do not use generated mock logos or fake LIVE thumbnails.",
+    "Images are geared to theme1. The five user-selectable themes should continue using existing CSS tokens for UI, not image-based UI chrome."
+  ],
+  "assets": [
+    {
+      "file": "hero-desktop.webp",
+      "size": "1920x760",
+      "usage": "Desktop Hero, text on left, artwork on right"
+    },
+    {
+      "file": "hero-tablet.webp",
+      "size": "1200x760",
+      "usage": "Tablet Hero"
+    },
+    {
+      "file": "hero-mobile.webp",
+      "size": "840x1040",
+      "usage": "Mobile Hero; overlay copy in lower portion"
+    },
+    {
+      "file": "feature-autumn.webp",
+      "size": "1120x560",
+      "usage": "Autumn special banner; HTML copy on left",
+      "textTone": "dark"
+    },
+    {
+      "file": "feature-new-voices.webp",
+      "size": "1120x560",
+      "usage": "New voices banner; HTML copy on left",
+      "textTone": "dark"
+    },
+    {
+      "file": "feature-collaboration.webp",
+      "size": "1120x560",
+      "usage": "Collaborations banner; HTML copy on left",
+      "textTone": "light"
+    },
+    {
+      "file": "feature-replay.webp",
+      "size": "1120x560",
+      "usage": "Replay or setlist banner; HTML copy on left",
+      "textTone": "dark"
+    },
+    {
+      "file": "feature-spring.webp",
+      "size": "1120x560",
+      "usage": "Spring / seasonal banner; HTML copy on left",
+      "textTone": "dark"
+    },
+    {
+      "file": "decoration-wave.svg",
+      "size": "1440x160",
+      "usage": "Subtle divider; style with CSS color token"
+    },
+    {
+      "file": "decoration-sparkles.svg",
+      "size": "240x120",
+      "usage": "Optional small sparkle ornament; use currentColor"
+    },
+    {
+      "file": "decoration-equalizer.svg",
+      "size": "420x100",
+      "usage": "Subtle audio waveform divider; use currentColor"
+    }
+  ]
+}
