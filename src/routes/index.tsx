@@ -25,7 +25,9 @@ function HomePage() {
         <LiveSection streams={liveStreams} categories={liveCategories} />
         <div className="grid gap-9 lg:grid-cols-[minmax(0,1.75fr)_minmax(290px,0.85fr)] lg:gap-8">
           <FeaturedSection stories={featuredStories} />
-          <ScheduleSection items={scheduleItems} />
+          <aside aria-label="방송 일정 사이드바" className="self-start rounded-panel border border-border/70 bg-card/70 p-4 shadow-sm backdrop-blur-sm lg:sticky lg:top-[calc(3.5rem+env(safe-area-inset-top)+1rem)]">
+            <ScheduleSection items={scheduleItems} />
+          </aside>
         </div>
         <ChannelsSection channels={newChannels} />
       </div>
