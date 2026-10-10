@@ -1,0 +1,593 @@
+{
+  "hello": "안녕하세요",
+  "dayjsScheduleTemplate": "M월 DD일 (ddd) A hh:mm",
+  "time": {
+    "intervalMinutes": "{{count}}분 후",
+    "intervalHours": "{{count}}시간 후",
+    "longTemplate": "M월 DD일 (ddd) A hh:mm",
+    "shortTemplate": "YYYY년 MM월 DD일"
+  },
+  "error": {
+    "0000": "조회된 데이터가 없습니다.",
+    "errorPage": {
+      "link": "에러가 발생했습니다"
+    },
+    "internalServerError": {
+      "title": "500: 서버 에러",
+      "message1": "에러가 발생했습니다.",
+      "message2": "반복적으로 발생할시 관리자에게 문의해주세요",
+      "retry": "재시도"
+    },
+    "notFound": {
+      "title": "404: 페이지를 찾을 수 없음",
+      "imageAlt": "페이지를 찾을 수 없습니다.",
+      "goBack": "뒤로가기"
+    },
+    "unauthorized": {
+      "title": "401: 권한이 없음",
+      "imageAlt": "권한이 없습니다.",
+      "linkToLogin": "로그인 하러 가기"
+    }
+  },
+  "global": {
+    "externalLink": {
+      "kizunaAiGallery": "키즈나 아이 갤러리",
+      "vutaGallery": "버튜버 우타와꾸 갤러리",
+      "utaTools": "우타툴즈",
+      "ezgif": "EZ GIF"
+    },
+    "bottomTab": {
+      "drawer": {
+        "title": "사이트 맵",
+        "description": "링크를 선택하세요",
+        "internalLinks": {
+          "featured": "특집",
+          "utils": "유틸리티",
+          "settings": "설정",
+          "dev": "개발",
+          "support": "지원"
+        },
+        "externalLinks": {
+          "kizunaAiGallery": "키갤",
+          "vutaGallery": "버우갤",
+          "utaTools": "우타툴즈"
+        }
+      },
+      "bottomInner": {
+        "setlist": "세트리",
+        "channel": "채널",
+        "home": "홈",
+        "schedule": "스케줄",
+        "more": "더보기"
+      }
+    },
+    "config": {
+      "reactQuery": {
+        "communicationError": "통신 에러"
+      }
+    },
+    "copyButton": {
+      "copy": "복사",
+      "copied": "복사되었습니다."
+    },
+    "pasteButton": {
+      "paste": "붙여넣기",
+      "pasted": "붙여넣었습니다."
+    },
+    "clearButton": {
+      "clear": "초기화",
+      "cleared": "초기화되었습니다."
+    },
+    "dataFetchingObserver": {
+      "sessionExpired": "세션이 만료되었습니다.",
+      "fetching": "서버와 통신중입니다."
+    },
+    "moreButton": {
+      "more": "더보기",
+      "less": "접기"
+    },
+    "footer": {
+      "site": "이 사이트는 비영리 버튜버 팬 사이트입니다"
+    },
+    "header": {
+      "userAvatarAlt": "사용자 아바타",
+      "login": "로그인",
+      "search": "검색",
+      "desktopNav": {
+        "internalLink": "목차",
+        "utilsLink": "유틸리티",
+        "externalLink": "외부 링크",
+        "internalLinks": {
+          "home": "홈",
+          "schedule": "스케줄",
+          "multiView": "멀티뷰",
+          "channel": "채널",
+          "setlist": "세트리",
+          "settings": "설정",
+          "dev": "개발",
+          "featured": "특집",
+          "support": "지원",
+          "utils": "유틸리티"
+        },
+        "externalLinks": {
+          "kizunaAiGallery": "키즈나 아이 갤러리",
+          "vutaGallery": "버튜버 우타와꾸 갤러리",
+          "utaTools": "우타툴즈"
+        }
+      }
+    },
+    "iframe": {
+      "open": "새로 열기"
+    },
+    "modal": {
+      "alertModal": {
+        "confirm": "확인"
+      },
+      "channelCardModal": {
+        "channelImageOf": "의 채널 이미지",
+        "subscribers": "구독자",
+        "videos": "동영상",
+        "channel": "채널"
+      },
+      "confirmModal": {
+        "cancel": "취소",
+        "confirm": "확인"
+      },
+      "errorModal": {
+        "confirm": "확인"
+      },
+      "multiListModal": {
+        "noURLWarning": "URL을 입력해주세요.",
+        "max4Warning": "4개까지만 입력할 수 있습니다.",
+        "modalTitle": "멀티뷰 추가",
+        "description1": "최대 4개의 영상까지 추가 가능하고, 영상크기는 쇼츠영상에 맞춰져있습니다.",
+        "description2": "모바일 환경에서는 동시에 재생되지 않을 수 있습니다.",
+        "linkToMultiView": "멀티뷰로 이동",
+        "add": "추가",
+        "remove": "제거"
+      }
+    },
+    "player": {
+      "title": "플레이어",
+      "show": "보이기",
+      "hide": "숨기기",
+      "play": "재생",
+      "pause": "일시정지",
+      "cannotPlayError": "재생할 수 없습니다."
+    },
+    "serviceWorker": {
+      "noBrowserNotificationError": "브라우저 알림허용 설정이 되어있지 않습니다."
+    },
+    "session": {
+      "sessionExpired": "세션이 만료되었습니다.",
+      "fetching": "서버와 통신중입니다."
+    },
+    "command": {
+      "empty": "커맨드를 찾을 수 없습니다.",
+      "open": "열기",
+      "close": "닫기",
+      "inputPlaceholder": "커맨드를 입력하세요...",
+      "globalCommands": {
+        "action": "액션",
+        "actions": {
+          "commandPalette": "커맨드 팔레트",
+          "theme": "테마",
+          "korean": "한국어",
+          "english": "영어",
+          "japanese": "일본어"
+        },
+        "navigate": "페이지 이동",
+        "navigation": {
+          "home": "홈",
+          "schedule": "스케줄",
+          "multiView": "멀티뷰",
+          "channel": "채널",
+          "setlist": "세트리",
+          "settings": "설정",
+          "dev": "개발",
+          "featured": "특집",
+          "support": "지원"
+        },
+        "utility": "유틸리티",
+        "utilities": {
+          "converters": {
+            "base64": "Base64 인코더/디코더"
+          },
+          "youtube": {
+            "thumbnail": "유튜브 썸네일"
+          }
+        }
+      }
+    }
+  },
+  "home": {
+    "title": "홈",
+    "addFavoriteChannel": "즐겨찾기에 추가하시겠습니까?",
+    "removeFavoriteChannel": "즐겨찾기에서 제거하시겠습니까?",
+    "blockChannel": "채널을 차단하시겠습니까?",
+    "unblockChannel": "채널 차단을 해제하시겠습니까?",
+    "live": "라이브",
+    "favorite": "즐겨찾기",
+    "searchSchedule": "스케줄을 검색해보세요",
+    "searchInputPlaceholder": "채널명으로 검색",
+    "recentlyAddedChannel": "최근 추가된 채널",
+    "notLoggedInError": "로그인 후 이용가능한 서비스입니다.",
+    "channelSlider": {
+      "hidden": "비공개",
+      "subscribers": "구독자",
+      "videos": "동영상",
+      "navigationChannel": "채널로 검색"
+    },
+    "sliderCard": {
+      "setNotification": "알림 설정",
+      "addMultiView": "멀티뷰 추가",
+      "favorite": "즐겨찾기",
+      "remove": "해제",
+      "add": "추가",
+      "blockChannel": "채널 차단",
+      "openInNewTab": "새 탭에서 열기"
+    },
+    "featured": "특집",
+    "featuredTitle": "VTuber 특집",
+    "featuredDescription": "인기 있는 VTuber들을 만나보세요"
+  },
+  "auth": {
+    "logout": {
+      "title": "로그아웃"
+    },
+    "register": {
+      "title": "회원가입"
+    }
+  },
+  "signIn": {
+    "0000": "로그인",
+    "0001": "로그인 페이지",
+    "0002": "라이브우타에 오신 것을 환영합니다.",
+    "0003": "이메일 주소를 입력해주세요",
+    "0004": "이메일 인증 요청",
+    "0005": "* 이메일을 받지 못한 경우 스팸 폴더를 확인하거나 다시 시도해주세요.",
+    "0006": "재요청",
+    "0007": "{{email}} 로 인증 링크를 발송했습니다.",
+    "0008": "인증코드 만료",
+    "0009": "이전",
+    "0010": "이메일",
+    "0011": "인증코드",
+    "0012": "만료시간: {{minutes}}분 {{seconds}}초",
+    "3000": "이메일 형식이 올바르지 않습니다."
+  },
+  "channel": {
+    "title": "채널",
+    "channelCard": {
+      "addFavoriteChannel": "즐겨찾기에 추가하시겠습니까?",
+      "removeFavoriteChannel": "즐겨찾기에서 제거하시겠습니까?",
+      "hidden": "비공개",
+      "subscriber": "구독자",
+      "video": "동영상",
+      "details": "상세보기",
+      "notLoggedInError": "로그인 후 이용가능한 서비스입니다."
+    },
+    "channelSection": {
+      "alphabetical": "가나다순",
+      "createdAt": "등록순",
+      "desktopRequest": "채널 등록",
+      "mobileRequest": "등록",
+      "inputPlaceholder": "채널명으로 검색"
+    },
+    "nav": {
+      "nameKorLabel": "사전순",
+      "createdAtLabel": "등록순",
+      "linkToRequest": "채널 등록",
+      "linkToRequestMobile": "등록",
+      "channelSearchInputPlaceholder": "채널명으로 검색",
+      "invalidUrlError": "올바르지 않은 URL 형식입니다."
+    },
+    "3000": "채널 등록하러 가기"
+  },
+  "dev": {
+    "title": "개발",
+    "initialPermission": "설정을 가져오는 중",
+    "permissionGranted": "허용",
+    "permissionDenied": "거부",
+    "browserNotificationAllowed": "브라우저 알림이 허용되었습니다.",
+    "noBrowserNotificationError": "브라우저 알림허용 설정이 되어있지 않습니다.",
+    "browserNotification": "알림허용설정 여부",
+    "request": "요청",
+    "token": "토큰",
+    "postBox": {
+      "postLabel": "알림테스트",
+      "title": "제목",
+      "inputLabel": "내용",
+      "imageUrlInput": "이미지 URL",
+      "linkLabel": "링크",
+      "send": "전송"
+    },
+    "tokenBox": {
+      "tokenError": "토큰을 가져오는데 실패했습니다.",
+      "gettingToken": "토큰을 가져오는 중입니다."
+    }
+  },
+  "multiView": {
+    "0000": "멀티뷰",
+    "0005": "초기화",
+    "0006": "추가",
+    "0007": "시청자수",
+    "1000": "URL을 입력해주세요",
+    "3000": "{{count}}개이상 추가 할 수 없습니다.",
+    "3001": "모바일 환경은 지원되지 않습니다.",
+    "3002": "재생할 수 없습니다."
+  },
+  "my": {
+    "blacklist": {
+      "title": "차단목록",
+      "removeBlacklist": "차단을 해제하시겠습니까?",
+      "remove": "해제"
+    },
+    "favorite": {
+      "title": "즐겨찾기",
+      "removeFavorite": "즐겨찾기에서 제거하시겠습니까?",
+      "remove": "제거"
+    }
+  },
+  "schedule": {
+    "title": "일정",
+    "navTab": {
+      "scheduled": "예정",
+      "live": "라이브",
+      "daily": "24시",
+      "all": "전체"
+    },
+    "queryButton": {
+      "clearFilter": "검색 필터를 초기화하시겠습니까?",
+      "filtering": "필터링 중입니다.",
+      "now": "현재",
+      "clear": "초기화"
+    },
+    "scheduleCard": {
+      "imageAlt": "의 라이브방송",
+      "setNotification": "알림 설정",
+      "addMultiView": "멀티뷰 추가",
+      "favorite": "즐겨찾기",
+      "blockChannel": "채널 차단",
+      "copyLink": "링크 복사",
+      "linkCopied": "링크가 복사되었습니다.",
+      "thumbnail": "방송 썸네일",
+      "cardMenu": {
+        "setNotification": "알림 설정",
+        "addMultiView": "멀티뷰 추가",
+        "favorite": "즐겨찾기",
+        "add": "추가",
+        "remove": "해제",
+        "blockChannel": "채널 차단",
+        "openInNewTab": "새 탭에서 열기",
+        "copyLink": "링크 복사",
+        "linkCopied": "링크가 복사되었습니다."
+      }
+    },
+    "scheduleNavModal": {
+      "clearFilter": "검색 필터를 초기화하시겠습니까?",
+      "filtering": "필터링 중입니다.",
+      "clear": "초기화",
+      "queryInputPlaceholder": "채널명으로 검색"
+    },
+    "scheduleSection": {
+      "notLoggedInError": "로그인 후 이용가능한 서비스입니다.",
+      "addFavoriteChannel": "즐겨찾기에 추가하시겠습니까?",
+      "removeFavoriteChannel": "즐겨찾기에서 제거하시겠습니까?",
+      "blockChannel": "채널을 차단하시겠습니까?",
+      "searchAtChannelPage": "채널 페이지에서 검색"
+    },
+    "videoType": {
+      "groupLabel": "와꾸종류",
+      "all": "전체",
+      "stream": "방송",
+      "video": "동영상",
+      "filter": {
+        "scheduled": "예정",
+        "live": "라이브",
+        "daily": "24시",
+        "all": "전체"
+      }
+    },
+    "command": {
+      "filter": "필터",
+      "filters": {
+        "scheduled": "예정",
+        "live": "라이브",
+        "daily": "24시",
+        "all": "필터 없음"
+      },
+      "type": "영상 타입",
+      "types": {
+        "all": "전체 영상",
+        "stream": "방송",
+        "video": "동영상"
+      }
+    }
+  },
+  "request": {
+    "title": "요청",
+    "requestForm": {
+      "channelNameInputLabel": "채널 이름",
+      "channelAddressInputLabel": "채널 주소",
+      "submit": "제출",
+      "submitSuccess": "채널 추가 요청이 완료되었습니다.",
+      "validate": "채널 검증",
+      "nameKor": "채널명",
+      "submitAll": "전체 제출",
+      "registeredChannels": "이미 등록된 채널",
+      "description": "실제 일정표에 반영되기까지 약 1일 이내의 간격이 있을 수 있습니다.",
+      "description2": "오·탈자 등으로 인해 수정이 필요한 경우 <a>갤러리</a>에 알려주세요.",
+      "description3": "한 줄에 하나씩 최대 50개의 채널 주소 또는 영상 주소를 입력한 뒤 '중복 검사'를 눌러주세요.",
+      "channelCount": "현재 <b>{{count}}</b>개의 채널이 등록되어 있습니다.",
+      "invalidUrlError": "유효한 URL이 없습니다."
+    },
+    "waitingList": {
+      "channelName": "채널 이름",
+      "noWaitingList": "대기중인 버튜버가 없습니다."
+    },
+    "home": {
+      "requestChannel": "채널 등록",
+      "waitingList": "대기중인 채널"
+    }
+  },
+  "setlist": {
+    "title": "세트리",
+    "nav": {
+      "sortBroadcast": "방송일",
+      "sortCreate": "작성일",
+      "createNew": "세트리 작성"
+    },
+    "postDrawer": {
+      "upload": "업로드",
+      "uploadSetlist": "세트리 업로드",
+      "linkToCreateSetlist": "세트리 작성하러 가기"
+    },
+    "postForm": {
+      "linkLabel": "유튜브 링크",
+      "textareaLabel": "세트리",
+      "textareaPlaceholder": "38:53 노래제목1\n138:54 노래제목2\n238:54 노래제목3\n338:54 노래제목4",
+      "submit": "제출",
+      "formSuccess": "세트리가 업로드되었습니다.",
+      "invalidUrlError": "유효하지 않은 유튜브 URL입니다.",
+      "emptySetlistError": "세트리를 입력해주세요.",
+      "notLoggedInError": "로그인 후 이용가능한 서비스입니다."
+    },
+    "searchForm": {
+      "searchInputPlaceholder": "세트리로 검색"
+    },
+    "table": {
+      "headCellChannel": "채널명",
+      "headCellTitle": "제목",
+      "sortBroadcast": "방송일",
+      "sortCreate": "작성일"
+    }
+  },
+  "setlistCreate": {
+    "title": "세트리 작성",
+    "context": {
+      "copied": "세트리를 복사하였습니다",
+      "noSetlistError": "복사할 항목이 없습니다."
+    },
+    "setlistControlSection": {
+      "automaticSort": "자동 정렬",
+      "sort": "정렬",
+      "copy": "복사"
+    },
+    "table": {
+      "headCellTime": "시간",
+      "headCellValue": "텍스트",
+      "hour": "시",
+      "minute": "분",
+      "second": "초"
+    }
+  },
+  "setlistId": {
+    "desc": {
+      "modified": "수정되었습니다",
+      "notLoggedInError": "로그인 후 이용가능한 서비스입니다.",
+      "editSuccess": "수정되었습니다.",
+      "noContentError": "내용을 입력해주세요.",
+      "cancel": "취소",
+      "save": "저장",
+      "edit": "수정"
+    },
+    "info": {
+      "deleted": "삭제되었습니다.",
+      "deleteConfirm": "삭제하시겠습니까?",
+      "back": "뒤로가기",
+      "youtube": "유튜브",
+      "list": "목록",
+      "avatarAlt": "채널 아이콘",
+      "streamDate": "방송일",
+      "createDate": "작성일",
+      "lastModified": "수정일"
+    }
+  },
+  "settings": {
+    "title": "설정",
+    "autoSync": {
+      "title": "자동 동기화",
+      "onLabel": "사용",
+      "offLabel": "사용 안 함",
+      "refreshInterval": "새로고침 간격",
+      "unit": "분"
+    },
+    "language": {
+      "title": "언어"
+    },
+    "theme": {
+      "title": "테마"
+    }
+  },
+  "featured": {
+    "essential": "집계기준은 갤러리언급기준입니다.",
+    "promising": "유망한 스트리머",
+    "topRating": "인기 순위",
+    "addFavorite": "즐겨찾기에 추가",
+    "removeFavorite": "즐겨찾기에서 제거",
+    "block": "차단하기",
+    "modified": "수정되었습니다",
+    "notLoggedInError": "로그인 후 이용가능한 서비스입니다.",
+    "editSuccess": "수정되었습니다.",
+    "noContentError": "내용을 입력해주세요.",
+    "addFavoriteChannel": "즐겨찾기에 추가하시겠습니까?",
+    "removeFavoriteChannel": "즐겨찾기에서 제거하시겠습니까?",
+    "blockChannel": "채널을 차단하시겠습니까?",
+    "unblockChannel": "채널 차단을 해제하시겠습니까?"
+  },
+  "utils": {
+    "title": "유틸리티",
+    "links": {
+      "converter": "변환기",
+      "converters": {
+        "base64": "Base64",
+        "colors": "색상"
+      },
+      "youtube": "유튜브",
+      "youtubeItems": {
+        "thumbnail": "썸네일 다운로드"
+      }
+    },
+    "header": {
+      "openMobileSidebar": "사이드바 열기",
+      "closeMobileSidebar": "사이드바 닫기"
+    },
+    "sidebar": {
+      "title": "유틸리티 메뉴",
+      "description": "링크를 선택하세요"
+    },
+    "converters": {
+      "title": "변환기",
+      "base64": {
+        "title": "Base64",
+        "encode": "인코딩",
+        "decode": "디코딩",
+        "isEncodeTitle": "인코딩/디코딩",
+        "isEncodeDescription": "입력값을 인코딩할지 디코딩할지 선택하세요.",
+        "repeatTitle": "반복",
+        "repeatDescription": "인코딩/디코딩을 반복할 횟수를 선택하세요.",
+        "swap": "출력값을 입력으로 변환",
+        "input": "입력",
+        "output": "출력",
+        "encodeError": "올바르지 않은 입력값입니다.",
+        "decodeError": "Base64 디코딩에 실패했습니다."
+      },
+      "colors": {
+        "title": "색상"
+      }
+    },
+    "youtube": {
+      "title": "유튜브",
+      "thumbnail": {
+        "submit": "가져오기"
+      }
+    }
+  },
+  "hooks": {
+    "useReservePush": {
+      "tokenError": "토큰을 가져오는데 실패했습니다.",
+      "title": "스케줄 알림",
+      "body": "곧 {channelName} 의 방송이 시작됩니다."
+    }
+  }
+}

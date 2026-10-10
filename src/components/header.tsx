@@ -1,5 +1,7 @@
-import { Link } from '@tanstack/react-router'
 import { Menu, Search } from 'lucide-react'
+import { useLocation } from '@tanstack/react-router'
+import { Link } from '@/lib/i18n'
+import { useLocale } from '@/lib/i18n/client'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -30,10 +32,14 @@ const externalLinks = [
 ]
 
 export default function Header() {
+  const locale = useLocale()
+  const { pathname, searchStr, hash } = useLocation()
+  const localePath = pathname.replace(/^\/(ko|en|ja)(?=\/|$)/, '')
+
   return (
     <header className="sticky top-0 z-50 h-[calc(3.5rem+env(safe-area-inset-top))] border-b border-border/50 bg-background/55 pt-[env(safe-area-inset-top)] shadow-[0_1px_2px_rgba(56,52,52,0.4)] backdrop-blur-[8px] transition-colors duration-500">
       <nav aria-label="메인 내비게이션" className="mx-auto flex h-14 max-w-[1440px] items-center gap-4 px-4 sm:px-6 xl:w-4/5">
-        <Link to="/" className="flex shrink-0 items-center gap-2 text-foreground no-underline">
+        <Link locale={locale} to="/" className="flex shrink-0 items-center gap-2 text-foreground no-underline">
           <span className="grid size-8 place-items-center rounded-xl bg-primary text-sm font-black text-primary-foreground">♪</span>
           <span className="text-lg font-black tracking-tight">LiveUta</span>
         </Link>
@@ -44,7 +50,7 @@ export default function Header() {
                 <NavigationMenuTrigger className="h-9 px-3 text-xs font-semibold text-muted-foreground">내부 링크</NavigationMenuTrigger>
                 <NavigationMenuContent className="min-w-48">
                   <ul className="m-0 grid list-none gap-1 p-1">
-                    {internalLinks.map((item) => <li key={item.href}><NavigationMenuLink href={item.href} className="text-xs font-medium text-foreground no-underline">{item.label}</NavigationMenuLink></li>)}
+                    {internalLinks.map((item) => <li key={item.href}><NavigationMenuLink href={`/${locale}${item.href === '/' ? '' : item.href}`} className="text-xs font-medium text-foreground no-underline">{item.label}</NavigationMenuLink></li>)}
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -65,9 +71,24 @@ export default function Header() {
           </button>
         </div>
         <div className="ml-auto flex items-center gap-1.5">
-          <button aria-label="언어 선택" className="hidden h-9 items-center gap-1 rounded-full px-2 text-xs font-semibold text-muted-foreground hover:bg-muted sm:flex">◎ <span>KO</span></button>
+          <label className="hidden items-center gap-1 rounded-full px-2 text-xs font-semibold text-muted-foreground sm:flex">
+            <span className="sr-only">Language</span>
+            <select
+              aria-label="언어 선택"
+              className="h-9 rounded-full bg-transparent px-2 text-xs font-semibold text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              value={locale}
+              onChange={(event) => {
+                const nextLocale = event.currentTarget.value
+                window.location.assign(`/${nextLocale}${localePath}${searchStr}${hash}`)
+              }}
+            >
+              <option value="ko">KO</option>
+              <option value="en">English</option>
+              <option value="ja">JA</option>
+            </select>
+          </label>
           <ThemeToggle />
-          <a href="/about" className="ml-1 hidden rounded-control bg-primary px-4 py-2 text-xs font-bold text-primary-foreground no-underline sm:inline-flex">로그인</a>
+          <a href={`/${locale}/about`} className="ml-1 hidden rounded-control bg-primary px-4 py-2 text-xs font-bold text-primary-foreground no-underline sm:inline-flex">로그인</a>
           <button aria-label="메뉴 열기" className="grid size-9 place-items-center rounded-full text-muted-foreground hover:bg-muted lg:hidden"><Menu className="size-5" /></button>
         </div>
       </nav>

@@ -11,7 +11,7 @@ const scheduleSearchSchema = z.object({
   select: z.enum(['all', 'stream', 'video']).catch('all'),
 })
 
-export const Route = createFileRoute('/schedule')({
+export const Route = createFileRoute('/{-$locale}/_pip/schedule')({
   validateSearch: scheduleSearchSchema,
   loader: async () => {
     const apiUrl = (path: string) =>

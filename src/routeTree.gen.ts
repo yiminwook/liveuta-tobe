@@ -9,31 +9,31 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as ScheduleRouteImport } from './routes/schedule'
+import { Route as Char123LocaleChar125RouteImport } from './routes/{-$locale}'
 import { Route as ApiHelloRouteImport } from './routes/api/hello'
+import { Route as Char123LocaleChar125PipRouteImport } from './routes/{-$locale}._pip'
+import { Route as Char123LocaleChar125AboutRouteImport } from './routes/{-$locale}.about'
+import { Route as Char123LocaleChar125MultiRouteImport } from './routes/{-$locale}.multi'
 import { Route as ApiV1ChannelRouteImport } from './routes/api/v1/channel'
 import { Route as ApiV1ScheduleRouteImport } from './routes/api/v1/schedule'
+import { Route as Char123LocaleChar125PipIndexRouteImport } from './routes/{-$locale}._pip.index'
+import { Route as Char123LocaleChar125PipChannelRouteImport } from './routes/{-$locale}._pip.channel'
+import { Route as Char123LocaleChar125PipDevRouteImport } from './routes/{-$locale}._pip.dev'
+import { Route as Char123LocaleChar125PipFeaturedRouteImport } from './routes/{-$locale}._pip.featured'
+import { Route as Char123LocaleChar125PipScheduleRouteImport } from './routes/{-$locale}._pip.schedule'
+import { Route as Char123LocaleChar125PipSetlistRouteImport } from './routes/{-$locale}._pip.setlist'
+import { Route as Char123LocaleChar125PipSettingRouteImport } from './routes/{-$locale}._pip.setting'
+import { Route as Char123LocaleChar125PipSupportRouteImport } from './routes/{-$locale}._pip.support'
+import { Route as Char123LocaleChar125PipUtilsRouteImport } from './routes/{-$locale}._pip.utils'
 import { Route as ApiV1ChannelCheckDuplicatesRouteImport } from './routes/api/v1/channel/check-duplicates'
 import { Route as ApiV1ChannelCountRouteImport } from './routes/api/v1/channel/count'
 import { Route as ApiV1ChannelRequestsRouteImport } from './routes/api/v1/channel/requests'
 import { Route as ApiV1ChannelWaitingRouteImport } from './routes/api/v1/channel/waiting'
 import { Route as ApiV1LogErrorRouteImport } from './routes/api/v1/log/error'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ScheduleRoute = ScheduleRouteImport.update({
-  id: '/schedule',
-  path: '/schedule',
+const Char123LocaleChar125Route = Char123LocaleChar125RouteImport.update({
+  id: '/{-$locale}',
+  path: '/{-$locale}',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiHelloRoute = ApiHelloRouteImport.update({
@@ -41,6 +41,22 @@ const ApiHelloRoute = ApiHelloRouteImport.update({
   path: '/api/hello',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Char123LocaleChar125PipRoute = Char123LocaleChar125PipRouteImport.update({
+  id: '/_pip',
+  getParentRoute: () => Char123LocaleChar125Route,
+} as any)
+const Char123LocaleChar125AboutRoute =
+  Char123LocaleChar125AboutRouteImport.update({
+    id: '/about',
+    path: '/about',
+    getParentRoute: () => Char123LocaleChar125Route,
+  } as any)
+const Char123LocaleChar125MultiRoute =
+  Char123LocaleChar125MultiRouteImport.update({
+    id: '/multi',
+    path: '/multi',
+    getParentRoute: () => Char123LocaleChar125Route,
+  } as any)
 const ApiV1ChannelRoute = ApiV1ChannelRouteImport.update({
   id: '/api/v1/channel',
   path: '/api/v1/channel',
@@ -51,6 +67,60 @@ const ApiV1ScheduleRoute = ApiV1ScheduleRouteImport.update({
   path: '/api/v1/schedule',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Char123LocaleChar125PipIndexRoute =
+  Char123LocaleChar125PipIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => Char123LocaleChar125PipRoute,
+  } as any)
+const Char123LocaleChar125PipChannelRoute =
+  Char123LocaleChar125PipChannelRouteImport.update({
+    id: '/channel',
+    path: '/channel',
+    getParentRoute: () => Char123LocaleChar125PipRoute,
+  } as any)
+const Char123LocaleChar125PipDevRoute =
+  Char123LocaleChar125PipDevRouteImport.update({
+    id: '/dev',
+    path: '/dev',
+    getParentRoute: () => Char123LocaleChar125PipRoute,
+  } as any)
+const Char123LocaleChar125PipFeaturedRoute =
+  Char123LocaleChar125PipFeaturedRouteImport.update({
+    id: '/featured',
+    path: '/featured',
+    getParentRoute: () => Char123LocaleChar125PipRoute,
+  } as any)
+const Char123LocaleChar125PipScheduleRoute =
+  Char123LocaleChar125PipScheduleRouteImport.update({
+    id: '/schedule',
+    path: '/schedule',
+    getParentRoute: () => Char123LocaleChar125PipRoute,
+  } as any)
+const Char123LocaleChar125PipSetlistRoute =
+  Char123LocaleChar125PipSetlistRouteImport.update({
+    id: '/setlist',
+    path: '/setlist',
+    getParentRoute: () => Char123LocaleChar125PipRoute,
+  } as any)
+const Char123LocaleChar125PipSettingRoute =
+  Char123LocaleChar125PipSettingRouteImport.update({
+    id: '/setting',
+    path: '/setting',
+    getParentRoute: () => Char123LocaleChar125PipRoute,
+  } as any)
+const Char123LocaleChar125PipSupportRoute =
+  Char123LocaleChar125PipSupportRouteImport.update({
+    id: '/support',
+    path: '/support',
+    getParentRoute: () => Char123LocaleChar125PipRoute,
+  } as any)
+const Char123LocaleChar125PipUtilsRoute =
+  Char123LocaleChar125PipUtilsRouteImport.update({
+    id: '/utils',
+    path: '/utils',
+    getParentRoute: () => Char123LocaleChar125PipRoute,
+  } as any)
 const ApiV1ChannelCheckDuplicatesRoute =
   ApiV1ChannelCheckDuplicatesRouteImport.update({
     id: '/check-duplicates',
@@ -79,12 +149,21 @@ const ApiV1LogErrorRoute = ApiV1LogErrorRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/schedule': typeof ScheduleRoute
+  '/{-$locale}': typeof Char123LocaleChar125RouteWithChildren
   '/api/hello': typeof ApiHelloRoute
+  '/{-$locale}/about': typeof Char123LocaleChar125AboutRoute
+  '/{-$locale}/multi': typeof Char123LocaleChar125MultiRoute
   '/api/v1/channel': typeof ApiV1ChannelRouteWithChildren
   '/api/v1/schedule': typeof ApiV1ScheduleRoute
+  '/{-$locale}/channel': typeof Char123LocaleChar125PipChannelRoute
+  '/{-$locale}/dev': typeof Char123LocaleChar125PipDevRoute
+  '/{-$locale}/featured': typeof Char123LocaleChar125PipFeaturedRoute
+  '/{-$locale}/schedule': typeof Char123LocaleChar125PipScheduleRoute
+  '/{-$locale}/setlist': typeof Char123LocaleChar125PipSetlistRoute
+  '/{-$locale}/setting': typeof Char123LocaleChar125PipSettingRoute
+  '/{-$locale}/support': typeof Char123LocaleChar125PipSupportRoute
+  '/{-$locale}/utils': typeof Char123LocaleChar125PipUtilsRoute
+  '/{-$locale}/': typeof Char123LocaleChar125PipIndexRoute
   '/api/v1/channel/check-duplicates': typeof ApiV1ChannelCheckDuplicatesRoute
   '/api/v1/channel/count': typeof ApiV1ChannelCountRoute
   '/api/v1/channel/requests': typeof ApiV1ChannelRequestsRoute
@@ -92,12 +171,20 @@ export interface FileRoutesByFullPath {
   '/api/v1/log/error': typeof ApiV1LogErrorRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/schedule': typeof ScheduleRoute
+  '/{-$locale}': typeof Char123LocaleChar125PipIndexRoute
   '/api/hello': typeof ApiHelloRoute
+  '/{-$locale}/about': typeof Char123LocaleChar125AboutRoute
+  '/{-$locale}/multi': typeof Char123LocaleChar125MultiRoute
   '/api/v1/channel': typeof ApiV1ChannelRouteWithChildren
   '/api/v1/schedule': typeof ApiV1ScheduleRoute
+  '/{-$locale}/channel': typeof Char123LocaleChar125PipChannelRoute
+  '/{-$locale}/dev': typeof Char123LocaleChar125PipDevRoute
+  '/{-$locale}/featured': typeof Char123LocaleChar125PipFeaturedRoute
+  '/{-$locale}/schedule': typeof Char123LocaleChar125PipScheduleRoute
+  '/{-$locale}/setlist': typeof Char123LocaleChar125PipSetlistRoute
+  '/{-$locale}/setting': typeof Char123LocaleChar125PipSettingRoute
+  '/{-$locale}/support': typeof Char123LocaleChar125PipSupportRoute
+  '/{-$locale}/utils': typeof Char123LocaleChar125PipUtilsRoute
   '/api/v1/channel/check-duplicates': typeof ApiV1ChannelCheckDuplicatesRoute
   '/api/v1/channel/count': typeof ApiV1ChannelCountRoute
   '/api/v1/channel/requests': typeof ApiV1ChannelRequestsRoute
@@ -106,12 +193,22 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/schedule': typeof ScheduleRoute
+  '/{-$locale}': typeof Char123LocaleChar125RouteWithChildren
   '/api/hello': typeof ApiHelloRoute
+  '/{-$locale}/_pip': typeof Char123LocaleChar125PipRouteWithChildren
+  '/{-$locale}/about': typeof Char123LocaleChar125AboutRoute
+  '/{-$locale}/multi': typeof Char123LocaleChar125MultiRoute
   '/api/v1/channel': typeof ApiV1ChannelRouteWithChildren
   '/api/v1/schedule': typeof ApiV1ScheduleRoute
+  '/{-$locale}/_pip/channel': typeof Char123LocaleChar125PipChannelRoute
+  '/{-$locale}/_pip/dev': typeof Char123LocaleChar125PipDevRoute
+  '/{-$locale}/_pip/featured': typeof Char123LocaleChar125PipFeaturedRoute
+  '/{-$locale}/_pip/schedule': typeof Char123LocaleChar125PipScheduleRoute
+  '/{-$locale}/_pip/setlist': typeof Char123LocaleChar125PipSetlistRoute
+  '/{-$locale}/_pip/setting': typeof Char123LocaleChar125PipSettingRoute
+  '/{-$locale}/_pip/support': typeof Char123LocaleChar125PipSupportRoute
+  '/{-$locale}/_pip/utils': typeof Char123LocaleChar125PipUtilsRoute
+  '/{-$locale}/_pip/': typeof Char123LocaleChar125PipIndexRoute
   '/api/v1/channel/check-duplicates': typeof ApiV1ChannelCheckDuplicatesRoute
   '/api/v1/channel/count': typeof ApiV1ChannelCountRoute
   '/api/v1/channel/requests': typeof ApiV1ChannelRequestsRoute
@@ -121,12 +218,21 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
-    | '/about'
-    | '/schedule'
+    | '/{-$locale}'
     | '/api/hello'
+    | '/{-$locale}/about'
+    | '/{-$locale}/multi'
     | '/api/v1/channel'
     | '/api/v1/schedule'
+    | '/{-$locale}/channel'
+    | '/{-$locale}/dev'
+    | '/{-$locale}/featured'
+    | '/{-$locale}/schedule'
+    | '/{-$locale}/setlist'
+    | '/{-$locale}/setting'
+    | '/{-$locale}/support'
+    | '/{-$locale}/utils'
+    | '/{-$locale}/'
     | '/api/v1/channel/check-duplicates'
     | '/api/v1/channel/count'
     | '/api/v1/channel/requests'
@@ -134,12 +240,20 @@ export interface FileRouteTypes {
     | '/api/v1/log/error'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
-    | '/about'
-    | '/schedule'
+    | '/{-$locale}'
     | '/api/hello'
+    | '/{-$locale}/about'
+    | '/{-$locale}/multi'
     | '/api/v1/channel'
     | '/api/v1/schedule'
+    | '/{-$locale}/channel'
+    | '/{-$locale}/dev'
+    | '/{-$locale}/featured'
+    | '/{-$locale}/schedule'
+    | '/{-$locale}/setlist'
+    | '/{-$locale}/setting'
+    | '/{-$locale}/support'
+    | '/{-$locale}/utils'
     | '/api/v1/channel/check-duplicates'
     | '/api/v1/channel/count'
     | '/api/v1/channel/requests'
@@ -147,12 +261,22 @@ export interface FileRouteTypes {
     | '/api/v1/log/error'
   id:
     | '__root__'
-    | '/'
-    | '/about'
-    | '/schedule'
+    | '/{-$locale}'
     | '/api/hello'
+    | '/{-$locale}/_pip'
+    | '/{-$locale}/about'
+    | '/{-$locale}/multi'
     | '/api/v1/channel'
     | '/api/v1/schedule'
+    | '/{-$locale}/_pip/channel'
+    | '/{-$locale}/_pip/dev'
+    | '/{-$locale}/_pip/featured'
+    | '/{-$locale}/_pip/schedule'
+    | '/{-$locale}/_pip/setlist'
+    | '/{-$locale}/_pip/setting'
+    | '/{-$locale}/_pip/support'
+    | '/{-$locale}/_pip/utils'
+    | '/{-$locale}/_pip/'
     | '/api/v1/channel/check-duplicates'
     | '/api/v1/channel/count'
     | '/api/v1/channel/requests'
@@ -161,9 +285,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  ScheduleRoute: typeof ScheduleRoute
+  Char123LocaleChar125Route: typeof Char123LocaleChar125RouteWithChildren
   ApiHelloRoute: typeof ApiHelloRoute
   ApiV1ChannelRoute: typeof ApiV1ChannelRouteWithChildren
   ApiV1ScheduleRoute: typeof ApiV1ScheduleRoute
@@ -172,25 +294,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/schedule': {
-      id: '/schedule'
-      path: '/schedule'
-      fullPath: '/schedule'
-      preLoaderRoute: typeof ScheduleRouteImport
+    '/{-$locale}': {
+      id: '/{-$locale}'
+      path: '/{-$locale}'
+      fullPath: '/{-$locale}'
+      preLoaderRoute: typeof Char123LocaleChar125RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/hello': {
@@ -199,6 +307,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/hello'
       preLoaderRoute: typeof ApiHelloRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/{-$locale}/_pip': {
+      id: '/{-$locale}/_pip'
+      path: ''
+      fullPath: '/{-$locale}'
+      preLoaderRoute: typeof Char123LocaleChar125PipRouteImport
+      parentRoute: typeof Char123LocaleChar125Route
+    }
+    '/{-$locale}/about': {
+      id: '/{-$locale}/about'
+      path: '/about'
+      fullPath: '/{-$locale}/about'
+      preLoaderRoute: typeof Char123LocaleChar125AboutRouteImport
+      parentRoute: typeof Char123LocaleChar125Route
+    }
+    '/{-$locale}/multi': {
+      id: '/{-$locale}/multi'
+      path: '/multi'
+      fullPath: '/{-$locale}/multi'
+      preLoaderRoute: typeof Char123LocaleChar125MultiRouteImport
+      parentRoute: typeof Char123LocaleChar125Route
     }
     '/api/v1/channel': {
       id: '/api/v1/channel'
@@ -213,6 +342,69 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/v1/schedule'
       preLoaderRoute: typeof ApiV1ScheduleRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/{-$locale}/_pip/': {
+      id: '/{-$locale}/_pip/'
+      path: '/'
+      fullPath: '/{-$locale}/'
+      preLoaderRoute: typeof Char123LocaleChar125PipIndexRouteImport
+      parentRoute: typeof Char123LocaleChar125PipRoute
+    }
+    '/{-$locale}/_pip/channel': {
+      id: '/{-$locale}/_pip/channel'
+      path: '/channel'
+      fullPath: '/{-$locale}/channel'
+      preLoaderRoute: typeof Char123LocaleChar125PipChannelRouteImport
+      parentRoute: typeof Char123LocaleChar125PipRoute
+    }
+    '/{-$locale}/_pip/dev': {
+      id: '/{-$locale}/_pip/dev'
+      path: '/dev'
+      fullPath: '/{-$locale}/dev'
+      preLoaderRoute: typeof Char123LocaleChar125PipDevRouteImport
+      parentRoute: typeof Char123LocaleChar125PipRoute
+    }
+    '/{-$locale}/_pip/featured': {
+      id: '/{-$locale}/_pip/featured'
+      path: '/featured'
+      fullPath: '/{-$locale}/featured'
+      preLoaderRoute: typeof Char123LocaleChar125PipFeaturedRouteImport
+      parentRoute: typeof Char123LocaleChar125PipRoute
+    }
+    '/{-$locale}/_pip/schedule': {
+      id: '/{-$locale}/_pip/schedule'
+      path: '/schedule'
+      fullPath: '/{-$locale}/schedule'
+      preLoaderRoute: typeof Char123LocaleChar125PipScheduleRouteImport
+      parentRoute: typeof Char123LocaleChar125PipRoute
+    }
+    '/{-$locale}/_pip/setlist': {
+      id: '/{-$locale}/_pip/setlist'
+      path: '/setlist'
+      fullPath: '/{-$locale}/setlist'
+      preLoaderRoute: typeof Char123LocaleChar125PipSetlistRouteImport
+      parentRoute: typeof Char123LocaleChar125PipRoute
+    }
+    '/{-$locale}/_pip/setting': {
+      id: '/{-$locale}/_pip/setting'
+      path: '/setting'
+      fullPath: '/{-$locale}/setting'
+      preLoaderRoute: typeof Char123LocaleChar125PipSettingRouteImport
+      parentRoute: typeof Char123LocaleChar125PipRoute
+    }
+    '/{-$locale}/_pip/support': {
+      id: '/{-$locale}/_pip/support'
+      path: '/support'
+      fullPath: '/{-$locale}/support'
+      preLoaderRoute: typeof Char123LocaleChar125PipSupportRouteImport
+      parentRoute: typeof Char123LocaleChar125PipRoute
+    }
+    '/{-$locale}/_pip/utils': {
+      id: '/{-$locale}/_pip/utils'
+      path: '/utils'
+      fullPath: '/{-$locale}/utils'
+      preLoaderRoute: typeof Char123LocaleChar125PipUtilsRouteImport
+      parentRoute: typeof Char123LocaleChar125PipRoute
     }
     '/api/v1/channel/check-duplicates': {
       id: '/api/v1/channel/check-duplicates'
@@ -252,6 +444,51 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface Char123LocaleChar125PipRouteChildren {
+  Char123LocaleChar125PipChannelRoute: typeof Char123LocaleChar125PipChannelRoute
+  Char123LocaleChar125PipDevRoute: typeof Char123LocaleChar125PipDevRoute
+  Char123LocaleChar125PipFeaturedRoute: typeof Char123LocaleChar125PipFeaturedRoute
+  Char123LocaleChar125PipScheduleRoute: typeof Char123LocaleChar125PipScheduleRoute
+  Char123LocaleChar125PipSetlistRoute: typeof Char123LocaleChar125PipSetlistRoute
+  Char123LocaleChar125PipSettingRoute: typeof Char123LocaleChar125PipSettingRoute
+  Char123LocaleChar125PipSupportRoute: typeof Char123LocaleChar125PipSupportRoute
+  Char123LocaleChar125PipUtilsRoute: typeof Char123LocaleChar125PipUtilsRoute
+  Char123LocaleChar125PipIndexRoute: typeof Char123LocaleChar125PipIndexRoute
+}
+
+const Char123LocaleChar125PipRouteChildren: Char123LocaleChar125PipRouteChildren =
+  {
+    Char123LocaleChar125PipChannelRoute: Char123LocaleChar125PipChannelRoute,
+    Char123LocaleChar125PipDevRoute: Char123LocaleChar125PipDevRoute,
+    Char123LocaleChar125PipFeaturedRoute: Char123LocaleChar125PipFeaturedRoute,
+    Char123LocaleChar125PipScheduleRoute: Char123LocaleChar125PipScheduleRoute,
+    Char123LocaleChar125PipSetlistRoute: Char123LocaleChar125PipSetlistRoute,
+    Char123LocaleChar125PipSettingRoute: Char123LocaleChar125PipSettingRoute,
+    Char123LocaleChar125PipSupportRoute: Char123LocaleChar125PipSupportRoute,
+    Char123LocaleChar125PipUtilsRoute: Char123LocaleChar125PipUtilsRoute,
+    Char123LocaleChar125PipIndexRoute: Char123LocaleChar125PipIndexRoute,
+  }
+
+const Char123LocaleChar125PipRouteWithChildren =
+  Char123LocaleChar125PipRoute._addFileChildren(
+    Char123LocaleChar125PipRouteChildren,
+  )
+
+interface Char123LocaleChar125RouteChildren {
+  Char123LocaleChar125PipRoute: typeof Char123LocaleChar125PipRouteWithChildren
+  Char123LocaleChar125AboutRoute: typeof Char123LocaleChar125AboutRoute
+  Char123LocaleChar125MultiRoute: typeof Char123LocaleChar125MultiRoute
+}
+
+const Char123LocaleChar125RouteChildren: Char123LocaleChar125RouteChildren = {
+  Char123LocaleChar125PipRoute: Char123LocaleChar125PipRouteWithChildren,
+  Char123LocaleChar125AboutRoute: Char123LocaleChar125AboutRoute,
+  Char123LocaleChar125MultiRoute: Char123LocaleChar125MultiRoute,
+}
+
+const Char123LocaleChar125RouteWithChildren =
+  Char123LocaleChar125Route._addFileChildren(Char123LocaleChar125RouteChildren)
+
 interface ApiV1ChannelRouteChildren {
   ApiV1ChannelCheckDuplicatesRoute: typeof ApiV1ChannelCheckDuplicatesRoute
   ApiV1ChannelCountRoute: typeof ApiV1ChannelCountRoute
@@ -271,9 +508,7 @@ const ApiV1ChannelRouteWithChildren = ApiV1ChannelRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  ScheduleRoute: ScheduleRoute,
+  Char123LocaleChar125Route: Char123LocaleChar125RouteWithChildren,
   ApiHelloRoute: ApiHelloRoute,
   ApiV1ChannelRoute: ApiV1ChannelRouteWithChildren,
   ApiV1ScheduleRoute: ApiV1ScheduleRoute,

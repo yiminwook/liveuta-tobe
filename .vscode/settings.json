@@ -1,5 +1,6 @@
 {
   "biome.enabled": false,
+  "prettier.enable": true,
   "files.watcherExclude": {
     "**/routeTree.gen.ts": true
   },
@@ -9,5 +10,19 @@
   "files.readonlyInclude": {
     "**/routeTree.gen.ts": true
   },
-  "typescript.tsdk": "node_modules\\typescript\\lib"
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "i18n-ally.localesPaths": ["./messages"], // E.g. "./messages"
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.sourceLanguage": "ko",
+  "i18n-ally.displayLanguage": "ko",
+  "i18n-ally.enabledFrameworks": ["react-i18next", "i18next"],
+  "[css]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
+  "files.associations": {
+    "*.css": "css"
+  },  
+  "css.format.spaceAroundSelectorSeparator": true,
+  "css.format.preserveNewLines": true,
+  "css.format.maxPreserveNewLines": 2,
 }

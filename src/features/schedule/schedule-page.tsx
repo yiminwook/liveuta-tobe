@@ -32,7 +32,7 @@ export function SchedulePage({
   query: string
   videoType: VideoType
 }) {
-  const navigate = useNavigate({ from: '/schedule' })
+  const navigate = useNavigate({ from: '/{-$locale}/schedule' })
   const [search, setSearch] = useState(query)
   const [shownCount, setShownCount] = useState(24)
   const [isLoadingMore, setIsLoadingMore] = useState(false)

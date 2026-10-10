@@ -1,9 +1,12 @@
-import { HeadContent, Link, Scripts, createRootRoute } from '@tanstack/react-router'
+import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import Footer from '../components/footer'
 import Header from '../components/header'
+import { InternalServerErrorPage } from '@/components/error-pages/internal-server-error-page'
+import { NotFoundPage } from '@/components/error-pages/not-found-page'
 import { loadChannelNames } from '@/lib/api/channel'
+import { useLocale } from '@/lib/i18n/client'
 
 import appCss from '../styles.css?url'
 
@@ -11,7 +14,10 @@ const THEME_INIT_SCRIPT = `(function(){try{var stored=window.localStorage.getIte
 
 export const Route = createRootRoute({
   loader: () => loadChannelNames(),
-  notFoundComponent: NotFoundPage,
+  notFoundComponent: () => <NotFoundPage locale="ko" />,
+  errorComponent: ({ reset }) => (
+    <InternalServerErrorPage locale="ko" onRetry={reset} />
+  ),
   head: ({ loaderData }) => ({
     meta: [
       {
@@ -48,31 +54,11 @@ export const Route = createRootRoute({
   shellComponent: RootDocument,
 })
 
-function NotFoundPage() {
-  return (
-    <main className="mx-auto flex min-h-[50vh] w-full max-w-6xl flex-col items-center justify-center px-4 py-16 text-center">
-      <p className="mb-2 text-sm font-semibold tracking-wide text-primary uppercase">
-        404
-      </p>
-      <h1 className="mb-3 text-3xl font-bold text-foreground sm:text-4xl">
-        페이지를 찾을 수 없습니다
-      </h1>
-      <p className="mb-6 max-w-lg text-muted-foreground">
-        요청하신 페이지가 이동되었거나 주소가 올바르지 않습니다.
-      </p>
-      <Link
-        to="/"
-        className="rounded-md bg-primary px-5 py-2.5 font-semibold text-primary-foreground no-underline hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-      >
-        홈으로 이동
-      </Link>
-    </main>
-  )
-}
-
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const locale = useLocale()
+
   return (
-    <html lang="ko" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />

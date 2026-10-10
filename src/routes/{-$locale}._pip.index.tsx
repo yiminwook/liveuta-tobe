@@ -15,7 +15,7 @@ import {
   ScheduleSection,
 } from '@/features/home/home-sections'
 
-export const Route = createFileRoute('/')({ component: HomePage })
+export const Route = createFileRoute('/{-$locale}/_pip/')({ component: HomePage })
 
 function HomePage() {
   return (
