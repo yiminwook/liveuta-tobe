@@ -14,8 +14,8 @@
 | `src` 전체 파일 | 504 | 13 |
 | `src/components` TSX | 162 | 운영 컴포넌트 3개 |
 | 활성 `page.tsx` | 27 | 사용자 라우트 2개 |
-| 활성 API route 파일 | 23 | 0 |
-| 활성 HTTP handler | 28 | 0 |
+| 활성 API route 파일 | 23 | TanStack 서버 라우트 7개 |
+| 활성 HTTP handler | 28 | TanStack handler 7개 |
 | custom hook | 14 | 0 |
 | client store | 4 | 0 |
 | `"use client"` 파일 | 126 | 0 |
@@ -246,11 +246,13 @@
 
 - [ ] `GET /api/auth/google`: Gmail OAuth redirect, 관리자 인증, state/PKCE.
 - [ ] `GET /api/auth/callback/google`: state/code 검증, Oracle META credential 갱신.
-- [ ] `GET /api/hello`: development health/smoke 용도로 유지하거나 제거.
+- [x] `GET /api/hello`: TanStack Start 서버 라우트로 이전; `pnpm build` 통과 확인.
 - [ ] `GET /api/test`: signed external endpoint 진단용으로 보호하거나 제거.
-- [ ] `GET /api/v1/channel`: 전체 channel map과 query 지원 여부를 명확히 정의.
-- [ ] `GET /api/v1/channel/count`: 등록 채널 수.
-- [ ] `GET /api/v1/channel/waiting`: 등록 대기 목록.
+- [x] `GET /api/v1/channel`: 전체 channel map 조회를 signed external API adapter로 이전; legacy handler는 query를 사용하지 않음.
+- [x] `GET /api/v1/channel/count`: 등록 채널 수 handler 이전; signed external API adapter 사용.
+- [x] `GET /api/v1/channel/waiting`: 등록 대기 목록 handler 이전; signed external API adapter 사용.
+- [x] `POST /api/v1/channel/check-duplicates`: payload 구조와 URL 길이를 검사한 뒤 signed external API로 전달.
+- [x] `POST /api/v1/channel/requests`: 요청 항목 구조와 길이를 검사한 뒤 signed external API로 전달.
 - [ ] `GET /api/v1/youtube-channel`: page/size/sort/query/query-type와 YouTube 결합.
 - [ ] `GET /api/v1/schedule`: 시간/채널 정렬과 normalized schedule.
 - [ ] `GET /api/v1/featured`: top/promising 및 일관된 cache TTL.
@@ -271,7 +273,7 @@
 - [ ] `DELETE /api/v1/setlist/{videoId}`: level-3 권한과 transaction.
 - [ ] `POST /api/v1/reserve/push`: strict payload, token ownership, reserve/cancel 명시.
 - [ ] 기존 `GET /api/v1/revalidate`를 인증된 `POST` cache operation으로 교체한다.
-- [ ] `POST /api/v1/log/error`: payload size/rate limit와 민감정보 제거.
+- [x] `POST /api/v1/log/error`: 8 KiB 제한, process-local rate limit, message 정제 적용; stack/digest는 응답이나 로그에 포함하지 않음.
 
 ### 비활성/잠복 API
 

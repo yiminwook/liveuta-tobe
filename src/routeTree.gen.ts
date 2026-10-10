@@ -11,6 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as ApiHelloRouteImport } from './routes/api/hello'
+import { Route as ApiV1ChannelRouteImport } from './routes/api/v1/channel'
+import { Route as ApiV1ChannelCheckDuplicatesRouteImport } from './routes/api/v1/channel/check-duplicates'
+import { Route as ApiV1ChannelCountRouteImport } from './routes/api/v1/channel/count'
+import { Route as ApiV1ChannelRequestsRouteImport } from './routes/api/v1/channel/requests'
+import { Route as ApiV1ChannelWaitingRouteImport } from './routes/api/v1/channel/waiting'
+import { Route as ApiV1LogErrorRouteImport } from './routes/api/v1/log/error'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +29,119 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiHelloRoute = ApiHelloRouteImport.update({
+  id: '/api/hello',
+  path: '/api/hello',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1ChannelRoute = ApiV1ChannelRouteImport.update({
+  id: '/api/v1/channel',
+  path: '/api/v1/channel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1ChannelCheckDuplicatesRoute =
+  ApiV1ChannelCheckDuplicatesRouteImport.update({
+    id: '/check-duplicates',
+    path: '/check-duplicates',
+    getParentRoute: () => ApiV1ChannelRoute,
+  } as any)
+const ApiV1ChannelCountRoute = ApiV1ChannelCountRouteImport.update({
+  id: '/count',
+  path: '/count',
+  getParentRoute: () => ApiV1ChannelRoute,
+} as any)
+const ApiV1ChannelRequestsRoute = ApiV1ChannelRequestsRouteImport.update({
+  id: '/requests',
+  path: '/requests',
+  getParentRoute: () => ApiV1ChannelRoute,
+} as any)
+const ApiV1ChannelWaitingRoute = ApiV1ChannelWaitingRouteImport.update({
+  id: '/waiting',
+  path: '/waiting',
+  getParentRoute: () => ApiV1ChannelRoute,
+} as any)
+const ApiV1LogErrorRoute = ApiV1LogErrorRouteImport.update({
+  id: '/api/v1/log/error',
+  path: '/api/v1/log/error',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/api/hello': typeof ApiHelloRoute
+  '/api/v1/channel': typeof ApiV1ChannelRouteWithChildren
+  '/api/v1/channel/check-duplicates': typeof ApiV1ChannelCheckDuplicatesRoute
+  '/api/v1/channel/count': typeof ApiV1ChannelCountRoute
+  '/api/v1/channel/requests': typeof ApiV1ChannelRequestsRoute
+  '/api/v1/channel/waiting': typeof ApiV1ChannelWaitingRoute
+  '/api/v1/log/error': typeof ApiV1LogErrorRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/api/hello': typeof ApiHelloRoute
+  '/api/v1/channel': typeof ApiV1ChannelRouteWithChildren
+  '/api/v1/channel/check-duplicates': typeof ApiV1ChannelCheckDuplicatesRoute
+  '/api/v1/channel/count': typeof ApiV1ChannelCountRoute
+  '/api/v1/channel/requests': typeof ApiV1ChannelRequestsRoute
+  '/api/v1/channel/waiting': typeof ApiV1ChannelWaitingRoute
+  '/api/v1/log/error': typeof ApiV1LogErrorRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/api/hello': typeof ApiHelloRoute
+  '/api/v1/channel': typeof ApiV1ChannelRouteWithChildren
+  '/api/v1/channel/check-duplicates': typeof ApiV1ChannelCheckDuplicatesRoute
+  '/api/v1/channel/count': typeof ApiV1ChannelCountRoute
+  '/api/v1/channel/requests': typeof ApiV1ChannelRequestsRoute
+  '/api/v1/channel/waiting': typeof ApiV1ChannelWaitingRoute
+  '/api/v1/log/error': typeof ApiV1LogErrorRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/api/hello'
+    | '/api/v1/channel'
+    | '/api/v1/channel/check-duplicates'
+    | '/api/v1/channel/count'
+    | '/api/v1/channel/requests'
+    | '/api/v1/channel/waiting'
+    | '/api/v1/log/error'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about'
-  id: '__root__' | '/' | '/about'
+  to:
+    | '/'
+    | '/about'
+    | '/api/hello'
+    | '/api/v1/channel'
+    | '/api/v1/channel/check-duplicates'
+    | '/api/v1/channel/count'
+    | '/api/v1/channel/requests'
+    | '/api/v1/channel/waiting'
+    | '/api/v1/log/error'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/api/hello'
+    | '/api/v1/channel'
+    | '/api/v1/channel/check-duplicates'
+    | '/api/v1/channel/count'
+    | '/api/v1/channel/requests'
+    | '/api/v1/channel/waiting'
+    | '/api/v1/log/error'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ApiHelloRoute: typeof ApiHelloRoute
+  ApiV1ChannelRoute: typeof ApiV1ChannelRouteWithChildren
+  ApiV1LogErrorRoute: typeof ApiV1LogErrorRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,22 +160,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/hello': {
+      id: '/api/hello'
+      path: '/api/hello'
+      fullPath: '/api/hello'
+      preLoaderRoute: typeof ApiHelloRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/channel': {
+      id: '/api/v1/channel'
+      path: '/api/v1/channel'
+      fullPath: '/api/v1/channel'
+      preLoaderRoute: typeof ApiV1ChannelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/channel/check-duplicates': {
+      id: '/api/v1/channel/check-duplicates'
+      path: '/check-duplicates'
+      fullPath: '/api/v1/channel/check-duplicates'
+      preLoaderRoute: typeof ApiV1ChannelCheckDuplicatesRouteImport
+      parentRoute: typeof ApiV1ChannelRoute
+    }
+    '/api/v1/channel/count': {
+      id: '/api/v1/channel/count'
+      path: '/count'
+      fullPath: '/api/v1/channel/count'
+      preLoaderRoute: typeof ApiV1ChannelCountRouteImport
+      parentRoute: typeof ApiV1ChannelRoute
+    }
+    '/api/v1/channel/requests': {
+      id: '/api/v1/channel/requests'
+      path: '/requests'
+      fullPath: '/api/v1/channel/requests'
+      preLoaderRoute: typeof ApiV1ChannelRequestsRouteImport
+      parentRoute: typeof ApiV1ChannelRoute
+    }
+    '/api/v1/channel/waiting': {
+      id: '/api/v1/channel/waiting'
+      path: '/waiting'
+      fullPath: '/api/v1/channel/waiting'
+      preLoaderRoute: typeof ApiV1ChannelWaitingRouteImport
+      parentRoute: typeof ApiV1ChannelRoute
+    }
+    '/api/v1/log/error': {
+      id: '/api/v1/log/error'
+      path: '/api/v1/log/error'
+      fullPath: '/api/v1/log/error'
+      preLoaderRoute: typeof ApiV1LogErrorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
+
+interface ApiV1ChannelRouteChildren {
+  ApiV1ChannelCheckDuplicatesRoute: typeof ApiV1ChannelCheckDuplicatesRoute
+  ApiV1ChannelCountRoute: typeof ApiV1ChannelCountRoute
+  ApiV1ChannelRequestsRoute: typeof ApiV1ChannelRequestsRoute
+  ApiV1ChannelWaitingRoute: typeof ApiV1ChannelWaitingRoute
+}
+
+const ApiV1ChannelRouteChildren: ApiV1ChannelRouteChildren = {
+  ApiV1ChannelCheckDuplicatesRoute: ApiV1ChannelCheckDuplicatesRoute,
+  ApiV1ChannelCountRoute: ApiV1ChannelCountRoute,
+  ApiV1ChannelRequestsRoute: ApiV1ChannelRequestsRoute,
+  ApiV1ChannelWaitingRoute: ApiV1ChannelWaitingRoute,
+}
+
+const ApiV1ChannelRouteWithChildren = ApiV1ChannelRoute._addFileChildren(
+  ApiV1ChannelRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ApiHelloRoute: ApiHelloRoute,
+  ApiV1ChannelRoute: ApiV1ChannelRouteWithChildren,
+  ApiV1LogErrorRoute: ApiV1LogErrorRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
