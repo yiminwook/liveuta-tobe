@@ -38,7 +38,7 @@ export const heroData = {
   eyebrow: 'LIVEUTA MUSIC PORTAL',
   title: ['좋아하는 목소리가', '오늘도 여기에서.'],
   description: '라이브와 스케줄, 세트리스트를 한곳에서 만나보세요.',
-  image: photo('photo-1516280440614-37939bbacd81', 1800),
+  image: '/landing/hero-desktop.webp',
   stats: [
     { label: '지금 방송 중', value: '124', icon: 'radio' },
     { label: '오늘 예정', value: '357', icon: 'calendar' },
@@ -58,11 +58,11 @@ export const liveStreams: LiveStream[] = [
 ]
 
 export const featuredStories: FeaturedStory[] = [
-  { id: 'feature-1', title: '가을에 듣기 좋은 우타와꾸', subtitle: '계절의 온도를 담은 목소리', image: photo('photo-1470225620780-dba8ba36b745', 1200) },
-  { id: 'feature-2', title: '주목할 신인', subtitle: '새로운 목소리를 만나보세요', image: photo('photo-1516280440614-37939bbacd81', 700) },
-  { id: 'feature-3', title: '함께하는 특별한 밤', subtitle: '이번 주 콜라보 라이브', image: photo('photo-1506157786151-b8491531f063', 700) },
-  { id: 'feature-4', title: '다시 듣는 명곡', subtitle: '마음에 남는 라이브', image: photo('photo-1493225457124-a3eb161ffa5f', 700) },
-  { id: 'feature-5', title: '새벽 감성', subtitle: '잠들기 전 플레이리스트', image: photo('photo-1511379938547-c1f69419868d', 700) },
+  { id: 'feature-1', title: '가을에 듣기 좋은 우타와꾸', subtitle: '계절의 온도를 담은 목소리', image: '/landing/feature-autumn.webp' },
+  { id: 'feature-2', title: '주목할 신인', subtitle: '새로운 목소리를 만나보세요', image: '/landing/feature-new-voices.webp' },
+  { id: 'feature-3', title: '함께하는 특별한 밤', subtitle: '이번 주 콜라보 라이브', image: '/landing/feature-collaboration.webp' },
+  { id: 'feature-4', title: '다시 듣는 명곡', subtitle: '마음에 남는 라이브', image: '/landing/feature-replay.webp' },
+  { id: 'feature-5', title: '새벽 감성', subtitle: '잠들기 전 플레이리스트', image: '/landing/feature-spring.webp' },
 ]
 
 export const scheduleItems: ScheduleItem[] = [

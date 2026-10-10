@@ -21,6 +21,7 @@ function HomePage() {
   return (
     <main className="w-full">
       <Hero data={heroData} />
+      <div aria-hidden="true" className="-mt-2 h-10 w-full bg-primary/50 [mask:url('/landing/decoration-wave.svg')_center/100%_100%_no-repeat] sm:h-12" />
       <div className="mx-auto max-w-[1440px] space-y-9 px-5 py-7 sm:px-8 sm:py-9 xl:px-10">
         <LiveSection streams={liveStreams} categories={liveCategories} />
         <div className="grid gap-9 lg:grid-cols-[minmax(0,1.75fr)_minmax(290px,0.85fr)] lg:gap-8">

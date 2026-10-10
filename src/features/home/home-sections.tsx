@@ -23,11 +23,15 @@ type HeroContent = typeof import('./home-data').heroData
 
 export function Hero({ data }: { data: HeroContent }) {
   return (
-    <section className="relative isolate min-h-[390px] overflow-hidden bg-liveuta-first/20 sm:min-h-[430px] xl:min-h-[470px]">
-      <img src={data.image} alt="라이브 무대에서 노래하는 보컬" className="absolute inset-0 -z-20 size-full object-cover object-[62%_42%]" />
+    <section className="relative isolate min-h-[650px] overflow-hidden bg-liveuta-first/20 sm:min-h-[430px] xl:min-h-[470px]">
+      <picture className="absolute inset-0 -z-20 block size-full">
+        <source media="(max-width: 767px)" srcSet="/landing/hero-mobile.webp" />
+        <source media="(max-width: 1279px)" srcSet="/landing/hero-tablet.webp" />
+        <img src="/landing/hero-desktop.webp" alt="" fetchPriority="high" className="size-full object-cover object-[62%_42%] max-[767px]:object-top" />
+      </picture>
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-background via-background/90 to-background/10 sm:via-background/75" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-      <div className="mx-auto flex min-h-[390px] max-w-[1440px] flex-col justify-center px-5 py-10 sm:min-h-[430px] sm:px-10 xl:min-h-[470px] xl:px-12">
+      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-background/95 via-background/10 to-transparent sm:from-background/80 sm:via-transparent" />
+      <div className="mx-auto flex min-h-[650px] max-w-[1440px] flex-col justify-end px-5 py-8 sm:min-h-[430px] sm:justify-center sm:px-10 sm:py-10 xl:min-h-[470px] xl:px-12">
         <div className="max-w-2xl">
           <p className="mb-4 text-xs font-bold tracking-[0.22em] text-primary sm:text-sm">{data.eyebrow}</p>
           <h1 className="text-4xl leading-[1.18] font-black tracking-[-0.06em] text-foreground sm:text-5xl xl:text-[3.8rem]">
@@ -64,6 +68,7 @@ export function SectionHeading({ icon, title, href }: { icon: 'radio' | 'feature
   return <div className="mb-4 flex min-h-8 items-center gap-2">
     <Icon className="size-5 text-primary" strokeWidth={2.5} />
     <h2 className="m-0 text-lg font-extrabold tracking-tight sm:text-xl">{title}</h2>
+    {icon === 'feature' && <span aria-hidden="true" className="h-6 w-12 bg-primary [mask:url('/landing/decoration-sparkles.svg')_center/contain_no-repeat]" />}
     {href && <a href={href} className="ml-auto inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground no-underline hover:text-primary">전체 보기 <ChevronRight className="size-4" /></a>}
   </div>
 }
@@ -72,6 +77,7 @@ export function LiveSection({ streams, categories }: { streams: LiveStream[]; ca
   const [selected, setSelected] = useState('전체')
   const filtered = selected === '전체' ? streams : streams.filter((stream) => stream.category === selected)
   return <section id="live" className="scroll-mt-24">
+    <span aria-hidden="true" className="mb-2 block h-5 w-24 bg-primary/70 [mask:url('/landing/decoration-equalizer.svg')_center/contain_no-repeat]" />
     <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-2">
       <SectionHeading icon="radio" title="지금 라이브 중" href="#live-list" />
       <div className="-mt-3 flex max-w-full gap-1 overflow-x-auto pb-1 sm:ml-auto sm:-mt-3" aria-label="방송 카테고리">
