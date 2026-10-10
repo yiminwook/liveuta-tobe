@@ -1,11 +1,10 @@
 //에러테스트용
 
-'use client';
 import { useState } from 'react';
+import { clientAxios } from '@/lib/api/axios-client'
 
 export const typeErrorAPI = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/test`);
-  const data = await res.json();
+  const { data } = await clientAxios.get<unknown[]>('/api/v1/test')
   return data.map(() => '');
 };
 

@@ -1,9 +1,7 @@
-import 'server-only';
+import '@tanstack/react-start/server-only';
 import { google } from 'googleapis';
 
 export const youtubeService = google.youtube('v3');
-
-// const fetcher = (input: any) => fetch(input, { next: { revalidate: 1800, tags: [CHANNELS_TAG] } });
 
 export const getYoutubeChannelsByUid = async (uid: string) => {
   const response = await youtubeService.channels.list(
@@ -12,7 +10,6 @@ export const getYoutubeChannelsByUid = async (uid: string) => {
       part: ['id', 'snippet', 'statistics'],
       key: process.env.GOOGLE_API_KEY,
     },
-    // { fetchImplementation: fetcher },
   );
 
   return response.data;
@@ -26,7 +23,6 @@ export const getYoutubeChannels = async (idArr: string[]) => {
       part: ['id', 'snippet', 'statistics'],
       key: process.env.GOOGLE_API_KEY,
     },
-    // { fetchImplementation: fetcher },
   );
 
   return response.data;
@@ -41,7 +37,6 @@ export const searchYoutubeChannels = async (channelName: string) => {
       type: ['channel'],
       key: process.env.GOOGLE_API_KEY,
     },
-    // { fetchImplementation: fetcher },
   );
 
   return response.data;
@@ -54,7 +49,6 @@ export const getYoutubeChannelsByVideoId = async (videoId: string) => {
       id: [videoId],
       key: process.env.GOOGLE_API_KEY,
     },
-    // { fetchImplementation: fetcher },
   );
 
   return response.data.items?.[0] || null;
@@ -69,7 +63,6 @@ export const getYoutubeChannelByHandle = async (handle: string) => {
       part: ['id', 'snippet', 'statistics'],
       key: process.env.GOOGLE_API_KEY,
     },
-    // { fetchImplementation: fetcher },
   );
 
   return response.data.items?.[0] || null;

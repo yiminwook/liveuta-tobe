@@ -4,6 +4,9 @@ import { CHANNEL_QUERY_TYPE, CHANNEL_SORT } from '@/types';
 import z from 'zod';
 import { getChannelWithYoutube, parseChannel } from './service';
 import { youtube_v3 } from 'googleapis';
+import type { TEndpointChannel } from '@/lib/contracts/channel';
+
+export type { TEndpointChannel } from '@/lib/contracts/channel';
 
 export type TContentLength = {
   total: number;
@@ -64,18 +67,6 @@ export interface TEndpointVideo {
  *  "profile_picture_url": "https://yt3.ggpht.com/GLcYdhMiDSG2sTykoRoGIYxIJqNNWqyCctWGNCqY_FMvYeSEsq2jnACqIjBs__Iuw4E5AQGzQA"
  * }
  */
-export interface TEndpointChannel {
-  channel_id: string;
-  name_kor: string;
-  channel_addr: string;
-  handle_name: string;
-  createdAt: string;
-  waiting: boolean;
-  alive: boolean;
-  names: string[];
-  profile_picture_url: string;
-}
-
 /** 등록대기 채널 */
 export type TWaitingListItem = {
   name_kor: string;

@@ -1,8 +1,9 @@
-import 'server-only';
+import '@tanstack/react-start/server-only';
 import { google } from 'googleapis';
 
 export const GMAIL_SCOPE = 'https://www.googleapis.com/auth/gmail.send';
-export const GOOGLE_REDIRECT_URL = process.env.NEXT_PUBLIC_SITE_URL + '/api/auth/callback/google';
+export const GOOGLE_REDIRECT_URL =
+  (process.env.VITE_SITE_URL ?? import.meta.env.VITE_SITE_URL) + '/api/auth/callback/google';
 
 /** google cloud console */
 export const oauth2Client = new google.auth.OAuth2({

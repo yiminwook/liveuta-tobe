@@ -1,4 +1,4 @@
-import 'server-only';
+import '@tanstack/react-start/server-only';
 // SELECT T01.*, T02.EMAIL, COUNT(*) OVER() AS maxCount
 
 export enum SetlistOrder {

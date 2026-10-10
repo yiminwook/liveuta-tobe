@@ -1,4 +1,4 @@
-import 'server-only';
+import '@tanstack/react-start/server-only';
 
 export const GET_ALL_METADATA = 'SELECT * FROM META';
 

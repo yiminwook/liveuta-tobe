@@ -1,4 +1,4 @@
-import 'server-only';
+import '@tanstack/react-start/server-only';
 // const DATE_FORMAT = `ALTER SESSION SET NLS_DATE_FORMAT="YYYY/MM/DD HH24:MI:SS"`;
 
 export const MEMBER = `

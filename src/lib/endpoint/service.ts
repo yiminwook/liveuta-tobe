@@ -1,4 +1,4 @@
-'server-only';
+import '@tanstack/react-start/server-only';
 import { combineChannelData } from '@/utils/combineChannelData';
 import {
   CHANNEL_ORDER_MAP,
@@ -21,21 +21,21 @@ import {
 } from './type';
 import { addEscapeCharacter } from '@/utils/regexp';
 
-export const getAllVideos = () => endpointApi.get<TEndpointVideo[]>(GET_VIDEOS.all).json();
+export const getAllVideos = () => endpointApi.get<TEndpointVideo[]>(GET_VIDEOS.all).then(({ data }) => data);
 
 export const getChannelsMeta = () =>
-  endpointApi.get<TEndpointChannelMetaResponse>(GET_CHANNELS.meta).json();
+  endpointApi.get<TEndpointChannelMetaResponse>(GET_CHANNELS.meta).then(({ data }) => data);
 
-export const getAllChannels = () => endpointApi.get<TEndpointChannel[]>(GET_CHANNELS.index).json();
+export const getAllChannels = () => endpointApi.get<TEndpointChannel[]>(GET_CHANNELS.index).then(({ data }) => data);
 
 export const getChannelById = (channelId: string) =>
-  endpointApi.get<TEndpointChannel>(GET_CHANNELS.index + `/${channelId}`).json();
+  endpointApi.get<TEndpointChannel>(GET_CHANNELS.index + `/${channelId}`).then(({ data }) => data);
 
 export const getWaitingChannels = () =>
-  endpointApi.get<TWaitingListItem[]>(GET_CHANNELS.waiting).json();
+  endpointApi.get<TWaitingListItem[]>(GET_CHANNELS.waiting).then(({ data }) => data);
 
 export const getRegisteredChannelCount = () =>
-  endpointApi.get<{ count: number }>(GET_CHANNELS.count).json();
+  endpointApi.get<{ count: number }>(GET_CHANNELS.count).then(({ data }) => data);
 
 export const searchChannels = (args: {
   /** @default - 1 */
@@ -57,7 +57,7 @@ export const searchChannels = (args: {
 
   return endpointApi
     .get<TEndpointSearchResponse>(GET_CHANNELS.search + `?${query.toString()}`)
-    .json();
+    .then(({ data }) => data);
 };
 
 export const getChannelWithYoutube = async (dto: TChannelDto) => {
@@ -77,9 +77,8 @@ export const getChannelWithYoutube = async (dto: TChannelDto) => {
   // page=1&size=24&sort=name_kor&direction=asc // 사전순
   // page=1&size=24&sort=createdAt&direction=desc  // 등록순
 
-  const res = await endpointApi
-    .get<TEndpointSearchResponse>(GET_CHANNELS.search + `?${searchParams.toString()}`)
-    .json();
+  const { data: res } = await endpointApi
+    .get<TEndpointSearchResponse>(GET_CHANNELS.search + `?${searchParams.toString()}`);
 
   const total = res.meta.total;
   const totalPage = res.meta.totalPage;
@@ -97,7 +96,7 @@ export const getChannelWithYoutube = async (dto: TChannelDto) => {
 };
 
 export const getFeaturedChannels = () =>
-  endpointApi.get<TEndpointFeaturedResponse>(GET_FEATURED.index).json();
+  endpointApi.get<TEndpointFeaturedResponse>(GET_FEATURED.index).then(({ data }) => data);
 
 export const parseChannel = (channel: TEndpointChannel | null) => ({
   channelId: channel?.channel_id || 'no data',
@@ -108,10 +107,8 @@ export const parseChannel = (channel: TEndpointChannel | null) => ({
 
 export const checkDuplicatesChannels = (args: { urls: string[] }) =>
   endpointApi
-    .post<TRequestDuplicateCheckResult>(POST_CHANNELS.checkDuplicates, {
-      json: args,
-    })
-    .json();
+    .post<TRequestDuplicateCheckResult>(POST_CHANNELS.checkDuplicates, args)
+    .then(({ data }) => data);
 
 export const requestsChannels = (args: {
   channels: {
@@ -119,4 +116,4 @@ export const requestsChannels = (args: {
     channelId: string;
     handle: string;
   }[];
-}) => endpointApi.post<TRequestsChannelsResult>(POST_CHANNELS.requests, { json: args }).json();
+}) => endpointApi.post<TRequestsChannelsResult>(POST_CHANNELS.requests, args).then(({ data }) => data);

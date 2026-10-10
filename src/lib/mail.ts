@@ -1,4 +1,4 @@
-import 'server-only';
+import '@tanstack/react-start/server-only';
 import { google } from 'googleapis';
 import { oauth2Client } from './google';
 

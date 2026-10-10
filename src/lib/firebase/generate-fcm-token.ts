@@ -12,7 +12,7 @@ export const generateFcmToken = async () => {
   const register = await navigator.serviceWorker.register('/sw.js');
   const messaging = FirebaseClient.getInstance().message;
   const token = await getToken(messaging, {
-    vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+    vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
     serviceWorkerRegistration: register,
   });
 

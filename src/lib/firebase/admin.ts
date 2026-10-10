@@ -1,4 +1,4 @@
-import 'server-only';
+import '@tanstack/react-start/server-only';
 import * as admin from 'firebase-admin';
 import { getAuth } from 'firebase-admin/auth';
 import { getMessaging } from 'firebase-admin/messaging';
@@ -21,7 +21,7 @@ export const jwtAuth = new google.auth.JWT(
 //   clientId: process.env.GOOGLE_CLIENT_ID,
 //   scopes: FIREBASE_SCOPES,
 //   clientSecret: process.env.FIREBASE_PRIVATE_KEY.replaceAll(/\\n/g, '\n'),
-//   redirectUri: process.env.NEXT_PUBLIC_SITE_URL + '/api/auth/callback/google',
+//   redirectUri: process.env.VITE_SITE_URL + '/api/auth/callback/google',
 // });
 
 export const getAccessToken = () => {

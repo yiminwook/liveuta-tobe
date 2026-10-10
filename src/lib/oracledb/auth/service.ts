@@ -1,4 +1,4 @@
-import 'server-only';
+import '@tanstack/react-start/server-only';
 import jwt from 'jsonwebtoken';
 import { headers } from 'next/headers';
 import dayjs from '@/libraries/dayjs';

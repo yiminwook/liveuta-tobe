@@ -1,4 +1,4 @@
-import 'server-only';
+import '@tanstack/react-start/server-only';
 import { DBError } from 'oracledb';
 import { SETLIST_PAGE_SIZE } from '@/constants';
 import dayjs from '@/libraries/dayjs';

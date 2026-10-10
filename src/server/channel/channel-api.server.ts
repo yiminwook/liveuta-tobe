@@ -1,4 +1,4 @@
-import { createHmac } from 'node:crypto'
+import { serverAxios } from '@/lib/api/axios-server.server'
 
 const API_VERSION = 'v1'
 const MAX_REQUEST_BYTES = 128 * 1024
@@ -19,33 +19,35 @@ export async function requestChannelApi(
     return Response.json({ message: 'Request body is too large' }, { status: 413 })
   }
 
-  const timestamp = Math.floor(Date.now() / 1000).toString()
-  const signature = createHmac('sha256', secret).update(`${timestamp}.${body}`).digest('hex')
   const target = new URL(`/api/${API_VERSION}/${path.replace(/^\/+/, '')}`, baseUrl)
   if (options.query) target.search = options.query.toString()
 
-  let response: Response
+  let response: Awaited<ReturnType<typeof serverAxios.request<ArrayBuffer>>>
   try {
-    response = await fetch(target, {
+    response = await serverAxios.request<ArrayBuffer>({
+      url: target.toString(),
       method,
-      headers: {
-        'X-Signature': signature,
-        'X-Timestamp': timestamp,
-        ...(body ? { 'Content-Type': 'application/json' } : {}),
-      },
-      body: body || undefined,
-      signal: AbortSignal.timeout(10_000),
-      cache: 'no-store',
+      data: body || undefined,
+      responseType: 'arraybuffer',
+      timeout: 10_000,
+      validateStatus: () => true,
     })
   } catch {
     return Response.json({ message: 'External channel API is unavailable', data: null }, { status: 502 })
   }
 
-  const payload = await response.arrayBuffer()
+  const payload = new Uint8Array(response.data)
+  const contentTypeHeader = response.headers['content-type']
+  const contentType =
+    typeof contentTypeHeader === 'string'
+      ? contentTypeHeader
+      : Array.isArray(contentTypeHeader)
+        ? contentTypeHeader.join(', ')
+        : 'application/json; charset=utf-8'
   return new Response(payload, {
     status: response.status,
     headers: {
-      'Content-Type': response.headers.get('content-type') ?? 'application/json; charset=utf-8',
+      'Content-Type': contentType,
       'Cache-Control': 'no-store',
     },
   })

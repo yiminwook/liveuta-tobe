@@ -1,4 +1,4 @@
-import 'server-only';
+import '@tanstack/react-start/server-only';
 import { i18next } from './i18next';
 import { TLocaleCode } from './type';
 
