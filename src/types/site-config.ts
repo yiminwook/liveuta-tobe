@@ -1,4 +1,4 @@
-import { TLocaleCode } from '@/libraries/i18n/type';
+import { type TLocaleCode } from '@/lib/i18n/type';
 
 export type Locale = {
   code: TLocaleCode;

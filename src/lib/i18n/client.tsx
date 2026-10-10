@@ -1,11 +1,8 @@
-'use client';
-import { useParams } from 'next/navigation';
-import { usePathname as useNextPathname } from 'next/navigation';
+import { useLocation } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { useTranslation as useTranslationClient } from 'react-i18next';
-import { FALLBACK_LANG } from './config';
+import { FALLBACK_LANG, LANGUAGES } from './config';
 import { i18next } from './i18next';
-import { TLocaleCode } from './type';
 
 const runsOnServerSide = typeof window === 'undefined';
 
@@ -31,14 +28,20 @@ export function useTranslations(options?: Parameters<typeof useTranslationClient
 }
 
 export const useLocale = () => {
-  const params = useParams<{ locale?: TLocaleCode }>();
+  const { pathname } = useLocation();
+  const firstSegment = pathname.split('/')[1];
 
-  return params.locale ?? FALLBACK_LANG;
+  return LANGUAGES.find((locale) => locale === firstSegment) ?? FALLBACK_LANG;
 };
 
 export const usePathname = () => {
-  const pathname = useNextPathname();
+  const { pathname } = useLocation();
   const locale = useLocale();
+  const localePrefix = `/${locale}`;
 
-  return pathname.replace(`/${locale}`, '');
+  if (pathname === localePrefix) return '';
+
+  return pathname.startsWith(`${localePrefix}/`)
+    ? pathname.slice(localePrefix.length)
+    : pathname;
 };

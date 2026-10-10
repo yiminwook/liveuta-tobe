@@ -1,4 +1,4 @@
-import { TImageFormat, ThumbnailSize } from './type';
+import { type TImageFormat, type ThumbnailSize } from './type';
 
 export const generateVideoUrl = (videoId: string) => {
   return `https://www.youtube.com/watch?v=${videoId}`;

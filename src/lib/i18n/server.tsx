@@ -1,6 +1,6 @@
 import '@tanstack/react-start/server-only';
 import { i18next } from './i18next';
-import { TLocaleCode } from './type';
+import { type TLocaleCode } from './type';
 
 export async function getTranslations(locale: TLocaleCode, options?: { keyPrefix?: string }) {
   if (locale && i18next.resolvedLanguage !== locale) {

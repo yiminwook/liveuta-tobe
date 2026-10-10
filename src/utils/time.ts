@@ -1,14 +1,14 @@
-import dayjs from '@/libraries/dayjs';
-import { HMS } from '@/types/time';
+import { differenceInMinutes } from 'date-fns';
+import type { HMS } from '@/types/time';
 
 type TranslateFunction = (key: string, options?: { count: number }) => string;
 
 export const getInterval = (scheduledTimeStamp: Date, t: TranslateFunction): string => {
-  const utcTime = dayjs(scheduledTimeStamp);
-  const nowTimeStamp = dayjs();
+  const scheduledTime = scheduledTimeStamp;
+  const nowTimeStamp = new Date();
 
   /** 분 */
-  const interval = utcTime.diff(nowTimeStamp, 'minute');
+  const interval = differenceInMinutes(scheduledTime, nowTimeStamp);
 
   if (interval < 0) {
     return '';
@@ -25,10 +25,9 @@ export const getInterval = (scheduledTimeStamp: Date, t: TranslateFunction): str
   return '';
 };
 
-export const stringToTime = (time: dayjs.Dayjs) => {
-  const timestamp = time.valueOf();
-  const utcTime = time.toDate();
-  return { timestamp, utcTime };
+export const stringToTime = (time: Date) => {
+  const timestamp = time.getTime();
+  return { timestamp, utcTime: time };
 };
 
 export const secondsToHMS = (seconds: number) => {

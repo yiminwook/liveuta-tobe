@@ -1,6 +1,6 @@
-import { TChannelRecord } from "@/libraries/endpoint/type";
-import { generateChannelUrl } from "@/libraries/youtube/url";
-import { TYChannelsData } from "@/types/api/youtube";
+import { type TChannelRecord } from "@/lib/endpoint/type";
+import { generateChannelUrl } from "@/lib/youtube/url";
+import { type TYChannelsData } from "@/types/api/youtube";
 import { youtube_v3 } from "googleapis";
 
 // refactor

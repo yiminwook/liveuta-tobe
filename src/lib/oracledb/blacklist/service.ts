@@ -1,5 +1,5 @@
 import '@tanstack/react-start/server-only';
-import CustomServerError from '@/libraries/error/customServerError';
+import CustomServerError from '@/lib/error/customServerError';
 import { withOracleConnection } from '../connection';
 import * as sql from './sql';
 

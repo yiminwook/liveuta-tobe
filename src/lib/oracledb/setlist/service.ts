@@ -1,9 +1,8 @@
 import '@tanstack/react-start/server-only';
-import { DBError } from 'oracledb';
+import { type DBError } from 'oracledb';
 import { SETLIST_PAGE_SIZE } from '@/constants';
-import dayjs from '@/libraries/dayjs';
-import CustomServerError from '@/libraries/error/customServerError';
-import { getYoutubeChannelsByUid } from '@/libraries/youtube';
+import CustomServerError from '@/lib/error/customServerError';
+import { getYoutubeChannelsByUid } from '@/lib/youtube';
 import { withOracleConnection } from '../connection';
 import * as sql from './sql';
 
@@ -32,10 +31,10 @@ export type Setlist = {
 const parseSetlistRow = (row: SetlistRow): Setlist => ({
   videoId: row[0],
   description: row[1],
-  createdAt: dayjs(row[2]).toISOString(),
-  updatedAt: dayjs(row[3]).toISOString(),
+  createdAt: row[2].toISOString(),
+  updatedAt: row[3].toISOString(),
   channelId: row[4],
-  broadcastAt: dayjs(row[5]).toISOString(),
+  broadcastAt: row[5].toISOString(),
   title: row[6],
   email: row[7],
 });
@@ -147,7 +146,7 @@ export const postSetlist = withOracleConnection(
     },
   ) => {
     try {
-      const nonullableBroadcastAt = dayjs(arg.broadcastAt || undefined).toDate();
+      const nonullableBroadcastAt = arg.broadcastAt ? new Date(arg.broadcastAt) : new Date();
 
       await connection.execute(sql.POST_SETLIST, [
         arg.videoId,
@@ -185,7 +184,7 @@ export const updateSetlist = withOracleConnection(
     },
   ) => {
     try {
-      const nonullableBroadcastAt = dayjs(arg.broadcastAt || undefined).toDate();
+      const nonullableBroadcastAt = arg.broadcastAt ? new Date(arg.broadcastAt) : new Date();
 
       await connection.execute(sql.UPDATE_SETLIST, [
         arg.title,

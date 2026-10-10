@@ -1,4 +1,4 @@
-import { Setlist } from '@/libraries/oracledb/setlist/service';
+import { type Setlist } from '@/lib/oracledb/setlist/service';
 
 export type GetSetlistRes = {
   message: string;

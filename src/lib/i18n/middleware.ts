@@ -1,59 +1,80 @@
+import { createMiddleware } from '@tanstack/react-start';
+import { setResponseHeader } from '@tanstack/react-start/server';
 import acceptLanguage from 'accept-language';
-import { NextRequest, NextResponse } from 'next/server';
 import { FALLBACK_LANG, LANGUAGES, LANG_COOKIE_NAME, LANG_HEADER_NAME } from './config';
 
-acceptLanguage.languages(LANGUAGES as unknown as string[]);
+acceptLanguage.languages([...LANGUAGES]);
 
-export function i18nMiddleware(request: NextRequest) {
-  // Ignore paths with "icon" or "chrome"
-  if (
-    request.nextUrl.pathname.indexOf('icon') > -1 ||
-    request.nextUrl.pathname.indexOf('chrome') > -1
-  )
-    return NextResponse.next();
+const getCookieValue = (cookieHeader: string | null, name: string) => {
+  const cookie = cookieHeader
+    ?.split(';')
+    .map((part) => part.trim())
+    .find((part) => part.startsWith(`${name}=`));
 
-  let lang;
-  // Try to get language from cookie
-  if (request.cookies.has(LANG_COOKIE_NAME)) {
-    lang = acceptLanguage.get(request.cookies.get(LANG_COOKIE_NAME)!.value);
-  }
-  // If no cookie, check the Accept-Language header
-  if (!lang) {
-    lang = acceptLanguage.get(request.headers.get('Accept-Language'));
-  }
-  // Default to fallback language if still undefined
-  if (!lang) {
-    lang = FALLBACK_LANG;
-  }
+  if (!cookie) return undefined;
 
-  // Check if the language is already in the path
-  const isLangInPath = LANGUAGES.find((locale) =>
-    request.nextUrl.pathname.startsWith(`/${locale}`),
+  try {
+    return decodeURIComponent(cookie.slice(name.length + 1));
+  } catch {
+    return undefined;
+  }
+};
+
+const getPathLanguage = (pathname: string) => {
+  const firstSegment = pathname.split('/')[1];
+  return LANGUAGES.find((locale) => locale === firstSegment);
+};
+
+const shouldSkipLocaleMiddleware = (pathname: string, handlerType: 'serverFn' | 'router') => {
+  if (handlerType === 'serverFn') return true;
+
+  return (
+    pathname.includes('icon') ||
+    pathname.includes('chrome') ||
+    pathname.startsWith('/api/') ||
+    pathname.startsWith('/_next/') ||
+    pathname.startsWith('/_tanstack/') ||
+    pathname.startsWith('/assets/') ||
+    pathname === '/favicon.ico' ||
+    pathname === '/sw.js' ||
+    pathname === '/site.webmanifest'
   );
+};
 
-  const headers = new Headers(request.headers);
-  headers.set(LANG_HEADER_NAME, isLangInPath || lang);
+export const i18nMiddleware = createMiddleware().server(
+  async ({ next, request, pathname, handlerType }) => {
+    if (shouldSkipLocaleMiddleware(pathname, handlerType)) {
+      return next();
+    }
 
-  // If the language is not in the path, redirect to include it
-  if (!isLangInPath && !request.nextUrl.pathname.startsWith('/_next')) {
-    return NextResponse.redirect(
-      new URL(`/${lang}${request.nextUrl.pathname}${request.nextUrl.search}`, request.url),
-    );
-  }
+    const url = new URL(request.url);
+    const pathLanguage = getPathLanguage(url.pathname);
+    const cookieLanguage = acceptLanguage.get(getCookieValue(request.headers.get('cookie'), LANG_COOKIE_NAME));
+    const headerLanguage = acceptLanguage.get(request.headers.get('accept-language'));
+    const language = pathLanguage ?? cookieLanguage ?? headerLanguage ?? FALLBACK_LANG;
 
-  // If a referer exists, try to detect the language from there and set the cookie accordingly
-  if (request.headers.has('referer')) {
-    const refererUrl = new URL(request.headers.get('referer')!);
-    const isLangInReferer = LANGUAGES.find((locale) =>
-      refererUrl.pathname.startsWith(`/${locale}`),
-    );
+    if (!pathLanguage) {
+      url.pathname = `/${language}${url.pathname}`;
+      return Response.redirect(url, 307);
+    }
 
-    const response = NextResponse.next({ headers });
-    if (isLangInReferer) response.cookies.set(LANG_COOKIE_NAME, isLangInReferer);
-    return response;
-  }
+    setResponseHeader(LANG_HEADER_NAME, language);
 
-  return NextResponse.next({ headers });
-}
+    const referer = request.headers.get('referer');
+    if (referer) {
+      try {
+        const refererLanguage = getPathLanguage(new URL(referer).pathname);
+        if (refererLanguage) {
+          setResponseHeader(
+            'set-cookie',
+            `${LANG_COOKIE_NAME}=${encodeURIComponent(refererLanguage)}; Path=/; SameSite=Lax`,
+          );
+        }
+      } catch {
+        // Ignore malformed Referer values.
+      }
+    }
 
-// matcher: ['/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|site.webmanifest).*)']
+    return next();
+  },
+);

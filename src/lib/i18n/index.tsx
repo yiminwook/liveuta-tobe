@@ -1,13 +1,16 @@
-import NextLink from 'next/link';
-import { ComponentProps } from 'react';
-import { TLocaleCode } from './type';
+import { Link as TanStackLink } from '@tanstack/react-router';
+import { type ComponentProps } from 'react';
+import { type TLocaleCode } from './type';
 
-export type TLinkProps = ComponentProps<typeof NextLink> & { locale: TLocaleCode };
+export type TLinkProps = Omit<ComponentProps<typeof TanStackLink>, 'to'> & {
+  locale: TLocaleCode;
+  to: string;
+};
 
-export const Link = ({ locale, href, ...props }: TLinkProps) => {
+export const Link = ({ locale, to, ...props }: TLinkProps) => {
   return (
-    <NextLink {...props} href={`/${locale}${href}`}>
+    <TanStackLink {...props} to={`/${locale}${to}` as never}>
       {props.children}
-    </NextLink>
+    </TanStackLink>
   );
 };

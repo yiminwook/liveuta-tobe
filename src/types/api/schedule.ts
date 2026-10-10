@@ -1,4 +1,4 @@
-import { TParsedServerContent } from "@/libraries/endpoint/type";
+import { type TParsedServerContent } from "@/lib/endpoint/type";
 
 export type TGetScheduleResponse = {
   message: string;

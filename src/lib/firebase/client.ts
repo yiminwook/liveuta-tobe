@@ -1,5 +1,5 @@
 import { getAnalytics } from 'firebase/analytics';
-import { FirebaseApp, getApps, initializeApp } from 'firebase/app';
+import { type FirebaseApp, getApps, initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getMessaging } from 'firebase/messaging';
 import firebaseConfig from '/firebase-client.json';

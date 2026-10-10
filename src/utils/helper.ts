@@ -1,6 +1,6 @@
 import { ITEMS_PER_PAGE } from '@/constants';
-import { DRAGGABLE_ZONE_RANGE, TCorner } from '@/constants/pip';
-import { TTheme } from '@/types';
+import { DRAGGABLE_ZONE_RANGE, type TCorner } from '@/constants/pip';
+import type { TTheme } from '@/types';
 
 export const waitfor = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

@@ -1,6 +1,6 @@
 import '@tanstack/react-start/server-only';
-import { TMetadata } from '@/types';
-import { TUpdateMetadataDto } from '@/types/dto';
+import { type TMetadata } from '@/types';
+import { type TUpdateMetadataDto } from '@/types/dto';
 import { withOracleConnection } from '../connection';
 import * as sql from './sql';
 

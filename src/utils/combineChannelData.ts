@@ -1,8 +1,7 @@
-import dayjs from "@/libraries/dayjs";
-import { TChannelDto, TChannelRecord } from "@/libraries/endpoint/type";
-import { getYoutubeChannels } from "@/libraries/youtube";
-import { generateChannelUrl } from "@/libraries/youtube/url";
-import { TYChannelsData } from "@/types/api/youtube";
+import { type TChannelDto, type TChannelRecord } from "@/lib/endpoint/type";
+import { getYoutubeChannels } from "@/lib/youtube";
+import { generateChannelUrl } from "@/lib/youtube/url";
+import { type TYChannelsData } from "@/types/api/youtube";
 
 /* YoutubeData API + MongoDB Channel Data */
 export const combineChannelData = async (
@@ -45,7 +44,7 @@ export const combineChannelData = async (
   const sortedChannelData = combinedSearchData.sort((a, b) => {
     if (option.sort === "createdAt") {
       // Sorting combined data by createdAt
-      return dayjs(b.createdAt).diff(dayjs(a.createdAt));
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     }
 
     // Sorting combined data by channelName with English locale

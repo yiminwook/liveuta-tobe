@@ -8,11 +8,12 @@ export interface TEndpointChannel {
   name_kor: string;
   channel_addr: string;
   handle_name: string;
-  createdAt: string;
   waiting: boolean;
-  alive: boolean;
   names: string[];
   profile_picture_url: string;
+
+  createdAt: string;
+  alive: boolean;
 }
 
 export type TContentLength = {

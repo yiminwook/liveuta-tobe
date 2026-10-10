@@ -1,6 +1,6 @@
 'use client';
 
-import { MouseEvent } from 'react';
+import { type MouseEvent } from 'react';
 
 //
 //  GA 데이터 수집설정

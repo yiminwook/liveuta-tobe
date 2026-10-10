@@ -1,12 +1,12 @@
 import '@tanstack/react-start/server-only';
+import { getRequestHeader } from '@tanstack/react-start/server';
+import { addSeconds } from 'date-fns';
 import jwt from 'jsonwebtoken';
-import { headers } from 'next/headers';
-import dayjs from '@/libraries/dayjs';
-import CustomServerError from '@/libraries/error/customServerError';
+import CustomServerError from '@/lib/error/customServerError';
 import {
   ACCESS_TOKEN_EXPIRES_IN,
   VERIFICATION_CODE_EXPIRES_IN,
-} from '@/libraries/oracledb/auth/config';
+} from '@/lib/oracledb/auth/config';
 import { withOracleConnection } from '../connection';
 import { GET_ONE_MEMBER, POST_MEMBER, UPDATE_MEMBER, UPDATE_VERIFICATION_CODE } from './sql';
 
@@ -26,10 +26,10 @@ export type TMemberInfo = {
   email: string;
   provider: string;
   userLv: number;
-  createAt: dayjs.Dayjs;
-  loginAt: dayjs.Dayjs;
+  createAt: Date;
+  loginAt: Date;
   verificationCode: string | null;
-  expiresAt: dayjs.Dayjs;
+  expiresAt: Date;
 };
 
 export const getMemberByEmail = withOracleConnection(
@@ -66,11 +66,11 @@ export const getMemberByEmail = withOracleConnection(
       provider: row[1],
       // disabled: row[2],
       userLv: row[3],
-      createAt: dayjs(row[4]),
-      loginAt: dayjs(row[5]),
+      createAt: row[4],
+      loginAt: row[5],
       // disconnect: row[6],
       verificationCode: row[7],
-      expiresAt: dayjs(row[8]),
+      expiresAt: row[8],
     };
   },
 );
@@ -108,7 +108,7 @@ export const postMember = withOracleConnection(
 
       await connection.execute(UPDATE_VERIFICATION_CODE, [
         verificationCode,
-        dayjs().add(VERIFICATION_CODE_EXPIRES_IN, 'second').toDate(),
+        addSeconds(new Date(), VERIFICATION_CODE_EXPIRES_IN),
         email,
       ]);
 
@@ -140,19 +140,17 @@ export const generateAccessToken = (arg: { email: string }): TSession => {
     expiresIn: ACCESS_TOKEN_EXPIRES_IN,
   });
 
-  const now = dayjs();
-  const expiresAt = now.add(ACCESS_TOKEN_EXPIRES_IN, 'second');
+  const expiresAt = addSeconds(new Date(), ACCESS_TOKEN_EXPIRES_IN);
 
   return {
     accessToken,
-    expiresAt: expiresAt.toDate(),
+    expiresAt,
     email: arg.email,
   };
 };
 
 export const parseAccessToken = async () => {
-  const headerList = await headers();
-  const idToken = headerList.get('Authorization')?.split('Bearer ')[1];
+  const idToken = getRequestHeader('authorization')?.split('Bearer ')[1];
   if (!idToken) return null;
 
   try {
