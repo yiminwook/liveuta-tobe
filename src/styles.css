@@ -5,8 +5,14 @@
 @custom-variant dark (&:is(.dark *));
 @plugin "@tailwindcss/typography";
 
+/*
+ * Color values stay on the root element so Tailwind utilities and shadcn
+ * components respond immediately when the user selects another theme.
+ * Breakpoints intentionally use Tailwind CSS v4 defaults (sm through 2xl).
+ */
 @theme inline {
   --font-sans: "Pretendard Variable", system-ui, sans-serif;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -25,67 +31,413 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
+
+  --color-liveuta-first: var(--liveuta-first-default);
+  --color-liveuta-first-light: var(--liveuta-first-light);
+  --color-liveuta-first-lighter: var(--liveuta-first-lighter);
+  --color-liveuta-first-dark: var(--liveuta-first-dark);
+  --color-liveuta-first-darken: var(--liveuta-first-darken);
+  --color-liveuta-second: var(--liveuta-second-default);
+  --color-liveuta-second-light: var(--liveuta-second-light);
+  --color-liveuta-second-lighter: var(--liveuta-second-lighter);
+  --color-liveuta-second-dark: var(--liveuta-second-dark);
+  --color-liveuta-second-darken: var(--liveuta-second-darken);
+  --color-liveuta-third: var(--liveuta-third-default);
+  --color-liveuta-third-light: var(--liveuta-third-light);
+  --color-liveuta-third-lighter: var(--liveuta-third-lighter);
+  --color-liveuta-third-dark: var(--liveuta-third-dark);
+  --color-liveuta-third-darken: var(--liveuta-third-darken);
+  --color-liveuta-fourth: var(--liveuta-fourth-default);
+  --color-liveuta-fourth-light: var(--liveuta-fourth-light);
+  --color-liveuta-fourth-lighter: var(--liveuta-fourth-lighter);
+  --color-liveuta-fourth-dark: var(--liveuta-fourth-dark);
+  --color-liveuta-fourth-darken: var(--liveuta-fourth-darken);
+  --color-liveuta-title: var(--liveuta-title);
+  --color-liveuta-text: var(--liveuta-text-default);
+  --color-liveuta-text-invert: var(--liveuta-text-invert);
+  --color-liveuta-text-light: var(--liveuta-text-light);
+  --color-liveuta-text-active: var(--liveuta-text-active);
+  --color-liveuta-schedule-closed: var(--liveuta-schedule-closed);
+  --color-liveuta-schedule-stream: var(--liveuta-schedule-stream);
+  --color-liveuta-schedule-stream-text: var(--liveuta-schedule-stream-text);
+
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-4xl: 2rem;
+  --radius-control: 0.5rem;
+  --radius-card: 0.75rem;
+  --radius-panel: 1rem;
 }
 
-:root {
+:root,
+:root[color="theme1"] {
   color-scheme: light;
 
-  --background: oklch(0.99 0.006 247);
-  --foreground: oklch(0.2 0.055 255);
-  --card: oklch(1 0 0);
-  --card-foreground: var(--foreground);
-  --popover: oklch(1 0 0);
-  --popover-foreground: var(--foreground);
-  --primary: oklch(0.66 0.17 238);
-  --primary-foreground: oklch(0.99 0.006 247);
-  --secondary: oklch(0.94 0.025 247);
-  --secondary-foreground: oklch(0.24 0.065 255);
-  --muted: oklch(0.95 0.018 247);
-  --muted-foreground: oklch(0.48 0.04 255);
-  --accent: oklch(0.89 0.07 235);
-  --accent-foreground: oklch(0.23 0.07 255);
-  --destructive: oklch(0.58 0.22 27);
-  --border: oklch(0.88 0.025 247);
-  --input: var(--border);
-  --ring: oklch(0.68 0.16 238);
-  --radius: 0.625rem;
+  --liveuta-first-25: rgb(255 193 204 / 25%);
+  --liveuta-first-50: rgb(255 193 204 / 50%);
+  --liveuta-first-75: rgb(255 193 204 / 75%);
+  --liveuta-first-95: rgb(255 193 204 / 95%);
+  --liveuta-first-default: #ffc1cc;
+  --liveuta-first-light: #ffced9;
+  --liveuta-first-lighter: #ffdbe6;
+  --liveuta-first-dark: #f2b4bf;
+  --liveuta-first-darken: #e6a8b3;
+  --liveuta-second-25: hsl(6 93% 71% / 25%);
+  --liveuta-second-50: hsl(6 93% 71% / 50%);
+  --liveuta-second-75: hsl(6 93% 71% / 75%);
+  --liveuta-second-95: hsl(6 93% 71% / 95%);
+  --liveuta-second-default: #fa8072;
+  --liveuta-second-light: #ff8d7f;
+  --liveuta-second-lighter: #ff9a8c;
+  --liveuta-second-dark: #ed7365;
+  --liveuta-second-darken: #e16759;
+  --liveuta-third-25: rgb(228 92 117 / 25%);
+  --liveuta-third-50: rgb(228 92 117 / 50%);
+  --liveuta-third-75: rgb(228 92 117 / 75%);
+  --liveuta-third-95: rgb(228 92 117 / 95%);
+  --liveuta-third-default: #e45c75;
+  --liveuta-third-light: #f16982;
+  --liveuta-third-lighter: #fe768f;
+  --liveuta-third-dark: #d74f68;
+  --liveuta-third-darken: #cb435c;
+  --liveuta-fourth-25: rgb(255 255 255 / 25%);
+  --liveuta-fourth-50: rgb(255 255 255 / 50%);
+  --liveuta-fourth-75: rgb(255 255 255 / 75%);
+  --liveuta-fourth-95: rgb(255 255 255 / 95%);
+  --liveuta-fourth-default: #f5f5f5;
+  --liveuta-fourth-light: #fafafa;
+  --liveuta-fourth-lighter: #fff;
+  --liveuta-fourth-dark: #ebebeb;
+  --liveuta-fourth-darken: #e6e6e6;
+  --liveuta-backdrop: rgb(255 255 255 / 20%);
+  --liveuta-title: #fff;
+  --liveuta-text-default: #000;
+  --liveuta-text-invert: #fff;
+  --liveuta-text-light: #fff;
+  --liveuta-text-active: #e06e61;
+  --liveuta-progress: #78aa81;
+  --liveuta-main: #fff;
+  --liveuta-card-bg: #f4f4f5;
+  --liveuta-schedule-closed: #d8f2ff;
+  --liveuta-schedule-stream: #fcefc7;
+  --liveuta-schedule-stream-text: #fa8072;
 
-  --brand: #38bdf8;
-  --brand-strong: #0284c7;
-  --navy: #061a34;
-  --navy-soft: #1e3a5f;
+  --background: var(--liveuta-main);
+  --foreground: var(--liveuta-text-default);
+  --card: var(--liveuta-card-bg);
+  --card-foreground: var(--foreground);
+  --popover: var(--liveuta-fourth-lighter);
+  --popover-foreground: var(--foreground);
+  --primary: var(--liveuta-third-default);
+  --primary-foreground: #fff;
+  --secondary: var(--liveuta-second-default);
+  --secondary-foreground: #fff;
+  --muted: var(--liveuta-fourth-default);
+  --muted-foreground: #666;
+  --accent: var(--liveuta-first-default);
+  --accent-foreground: #241216;
+  --destructive: #dc2626;
+  --border: rgb(0 0 0 / 12%);
+  --input: var(--border);
+  --ring: var(--liveuta-third-default);
+  --radius: 0.625rem;
 }
 
-.dark {
+:root[color="theme2"] {
+  color-scheme: light;
+
+  --liveuta-first-25: rgb(200 233 202 / 25%);
+  --liveuta-first-50: rgb(200 233 202 / 50%);
+  --liveuta-first-75: rgb(200 233 202 / 75%);
+  --liveuta-first-95: rgb(200 233 202 / 95%);
+  --liveuta-first-default: #c8e9ca;
+  --liveuta-first-light: #d5f6d7;
+  --liveuta-first-lighter: #e2ffe4;
+  --liveuta-first-dark: #bbdcbd;
+  --liveuta-first-darken: #afd0b1;
+  --liveuta-second-25: rgb(255 215 0 / 25%);
+  --liveuta-second-50: rgb(255 215 0 / 50%);
+  --liveuta-second-75: rgb(255 215 0 / 75%);
+  --liveuta-second-95: rgb(255 215 0 / 95%);
+  --liveuta-second-default: #ffd700;
+  --liveuta-second-light: #ffe40d;
+  --liveuta-second-lighter: #fff11a;
+  --liveuta-second-dark: #f2ca00;
+  --liveuta-second-darken: #e6be00;
+  --liveuta-third-25: rgb(100 170 43 / 25%);
+  --liveuta-third-50: rgb(100 170 43 / 50%);
+  --liveuta-third-75: rgb(100 170 43 / 75%);
+  --liveuta-third-95: rgb(100 170 43 / 95%);
+  --liveuta-third-default: #64aa2b;
+  --liveuta-third-light: #71b738;
+  --liveuta-third-lighter: #7ec445;
+  --liveuta-third-dark: #579d1e;
+  --liveuta-third-darken: #4b9112;
+  --liveuta-fourth-25: rgb(255 255 255 / 25%);
+  --liveuta-fourth-50: rgb(255 255 255 / 50%);
+  --liveuta-fourth-75: rgb(255 255 255 / 75%);
+  --liveuta-fourth-95: rgb(255 255 255 / 95%);
+  --liveuta-fourth-default: #f5f5f5;
+  --liveuta-fourth-light: #fafafa;
+  --liveuta-fourth-lighter: #fff;
+  --liveuta-fourth-dark: #ebebeb;
+  --liveuta-fourth-darken: #e6e6e6;
+  --liveuta-backdrop: rgb(255 255 255 / 20%);
+  --liveuta-title: #279e27;
+  --liveuta-text-default: #000;
+  --liveuta-text-invert: #fff;
+  --liveuta-text-light: #fff;
+  --liveuta-text-active: #279e27;
+  --liveuta-progress: #93596f;
+  --liveuta-main: #fff;
+  --liveuta-card-bg: #f4f4f5;
+  --liveuta-schedule-closed: #d8f2ff;
+  --liveuta-schedule-stream: #fcefc7;
+  --liveuta-schedule-stream-text: #fa8072;
+
+  --background: var(--liveuta-main);
+  --foreground: var(--liveuta-text-default);
+  --card: var(--liveuta-card-bg);
+  --card-foreground: var(--foreground);
+  --popover: var(--liveuta-fourth-lighter);
+  --popover-foreground: var(--foreground);
+  --primary: var(--liveuta-third-default);
+  --primary-foreground: #fff;
+  --secondary: var(--liveuta-second-default);
+  --secondary-foreground: #241f00;
+  --muted: var(--liveuta-fourth-default);
+  --muted-foreground: #666;
+  --accent: var(--liveuta-first-default);
+  --accent-foreground: #152216;
+  --destructive: #dc2626;
+  --border: rgb(0 0 0 / 12%);
+  --input: var(--border);
+  --ring: var(--liveuta-third-default);
+  --radius: 0.625rem;
+}
+
+:root[color="theme3"] {
+  color-scheme: light;
+
+  --liveuta-first-25: rgb(172 231 255 / 25%);
+  --liveuta-first-50: rgb(172 231 255 / 50%);
+  --liveuta-first-75: rgb(172 231 255 / 75%);
+  --liveuta-first-95: rgb(172 231 255 / 95%);
+  --liveuta-first-default: #ace7ff;
+  --liveuta-first-light: #b9f4ff;
+  --liveuta-first-lighter: #c6ffff;
+  --liveuta-first-dark: #9fdaf2;
+  --liveuta-first-darken: #93cee6;
+  --liveuta-second-25: rgb(255 110 43 / 25%);
+  --liveuta-second-50: rgb(255 110 43 / 50%);
+  --liveuta-second-75: rgb(255 110 43 / 75%);
+  --liveuta-second-95: rgb(255 110 43 / 95%);
+  --liveuta-second-default: #ff6e2b;
+  --liveuta-second-light: #ff7b38;
+  --liveuta-second-lighter: #ff8845;
+  --liveuta-second-dark: #f2611e;
+  --liveuta-second-darken: #e65512;
+  --liveuta-third-25: rgb(255 62 41 / 25%);
+  --liveuta-third-50: rgb(255 62 41 / 50%);
+  --liveuta-third-75: rgb(255 62 41 / 75%);
+  --liveuta-third-95: rgb(255 62 41 / 95%);
+  --liveuta-third-default: #ff3e29;
+  --liveuta-third-light: #ff4b36;
+  --liveuta-third-lighter: #ff5843;
+  --liveuta-third-dark: #f2311c;
+  --liveuta-third-darken: #e62510;
+  --liveuta-fourth-25: rgb(255 255 255 / 25%);
+  --liveuta-fourth-50: rgb(255 255 255 / 50%);
+  --liveuta-fourth-75: rgb(255 255 255 / 75%);
+  --liveuta-fourth-95: rgb(255 255 255 / 95%);
+  --liveuta-fourth-default: #f5f5f5;
+  --liveuta-fourth-light: #fafafa;
+  --liveuta-fourth-lighter: #fff;
+  --liveuta-fourth-dark: #ebebeb;
+  --liveuta-fourth-darken: #e6e6e6;
+  --liveuta-backdrop: rgb(255 255 255 / 20%);
+  --liveuta-title: #ff6e2b;
+  --liveuta-text-default: #000;
+  --liveuta-text-invert: #fff;
+  --liveuta-text-light: #fff;
+  --liveuta-text-active: #ff6e2b;
+  --liveuta-progress: #aa9a87;
+  --liveuta-main: #fff;
+  --liveuta-card-bg: #f4f4f5;
+  --liveuta-schedule-closed: #d8f2ff;
+  --liveuta-schedule-stream: #fcefc7;
+  --liveuta-schedule-stream-text: #fa8072;
+
+  --background: var(--liveuta-main);
+  --foreground: var(--liveuta-text-default);
+  --card: var(--liveuta-card-bg);
+  --card-foreground: var(--foreground);
+  --popover: var(--liveuta-fourth-lighter);
+  --popover-foreground: var(--foreground);
+  --primary: var(--liveuta-third-default);
+  --primary-foreground: #fff;
+  --secondary: var(--liveuta-second-default);
+  --secondary-foreground: #fff;
+  --muted: var(--liveuta-fourth-default);
+  --muted-foreground: #666;
+  --accent: var(--liveuta-first-default);
+  --accent-foreground: #122027;
+  --destructive: #dc2626;
+  --border: rgb(0 0 0 / 12%);
+  --input: var(--border);
+  --ring: var(--liveuta-third-default);
+  --radius: 0.625rem;
+}
+
+:root[color="theme4"] {
   color-scheme: dark;
 
-  --background: oklch(0.18 0.055 255);
-  --foreground: oklch(0.96 0.012 247);
-  --card: oklch(0.23 0.06 255);
-  --card-foreground: var(--foreground);
-  --popover: var(--card);
-  --popover-foreground: var(--foreground);
-  --primary: oklch(0.76 0.13 232);
-  --primary-foreground: oklch(0.18 0.055 255);
-  --secondary: oklch(0.3 0.06 255);
-  --secondary-foreground: var(--foreground);
-  --muted: oklch(0.28 0.045 255);
-  --muted-foreground: oklch(0.76 0.025 247);
-  --accent: oklch(0.36 0.08 242);
-  --accent-foreground: var(--foreground);
-  --destructive: oklch(0.68 0.19 24);
-  --border: oklch(1 0 0 / 14%);
-  --input: oklch(1 0 0 / 18%);
-  --ring: oklch(0.76 0.13 232);
+  --liveuta-first-25: rgb(13 21 36 / 25%);
+  --liveuta-first-50: rgb(13 21 36 / 50%);
+  --liveuta-first-75: rgb(13 21 36 / 75%);
+  --liveuta-first-95: rgb(13 21 36 / 95%);
+  --liveuta-first-default: #0d1524;
+  --liveuta-first-light: #1a2231;
+  --liveuta-first-lighter: #272f3e;
+  --liveuta-first-dark: #000817;
+  --liveuta-first-darken: #00000b;
+  --liveuta-second-25: rgb(70 109 182 / 25%);
+  --liveuta-second-50: rgb(70 109 182 / 50%);
+  --liveuta-second-75: rgb(70 109 182 / 75%);
+  --liveuta-second-95: rgb(70 109 182 / 95%);
+  --liveuta-second-default: #466db6;
+  --liveuta-second-light: #537ac3;
+  --liveuta-second-lighter: #6087d0;
+  --liveuta-second-dark: #3960a9;
+  --liveuta-second-darken: #2d549d;
+  --liveuta-third-25: rgb(255 215 0 / 25%);
+  --liveuta-third-50: rgb(255 215 0 / 50%);
+  --liveuta-third-75: rgb(255 215 0 / 75%);
+  --liveuta-third-95: rgb(255 215 0 / 95%);
+  --liveuta-third-default: #ffd700;
+  --liveuta-third-light: #ffe40d;
+  --liveuta-third-lighter: #fff11a;
+  --liveuta-third-dark: #f2ca00;
+  --liveuta-third-darken: #e6be00;
+  --liveuta-fourth-25: rgb(38 38 38 / 25%);
+  --liveuta-fourth-50: rgb(38 38 38 / 50%);
+  --liveuta-fourth-75: rgb(38 38 38 / 75%);
+  --liveuta-fourth-95: rgb(38 38 38 / 95%);
+  --liveuta-fourth-default: #262626;
+  --liveuta-fourth-light: #333;
+  --liveuta-fourth-lighter: #404040;
+  --liveuta-fourth-dark: #191919;
+  --liveuta-fourth-darken: #0d0d0d;
+  --liveuta-backdrop: rgb(255 255 255 / 20%);
+  --liveuta-title: #ffd700;
+  --liveuta-text-default: #fff;
+  --liveuta-text-invert: #000;
+  --liveuta-text-light: #ccc;
+  --liveuta-text-active: #ffd700;
+  --liveuta-progress: #796d54;
+  --liveuta-main: #000;
+  --liveuta-card-bg: #262626;
+  --liveuta-schedule-closed: hsl(200 50% 25%);
+  --liveuta-schedule-stream: hsl(45 50% 20%);
+  --liveuta-schedule-stream-text: var(--liveuta-text-default);
 
-  --navy: #eaf6ff;
-  --navy-soft: #b6cce4;
+  --background: var(--liveuta-main);
+  --foreground: var(--liveuta-text-default);
+  --card: var(--liveuta-card-bg);
+  --card-foreground: var(--foreground);
+  --popover: var(--liveuta-fourth-light);
+  --popover-foreground: var(--foreground);
+  --primary: var(--liveuta-third-default);
+  --primary-foreground: #171300;
+  --secondary: var(--liveuta-second-default);
+  --secondary-foreground: #fff;
+  --muted: var(--liveuta-fourth-default);
+  --muted-foreground: #ccc;
+  --accent: var(--liveuta-first-light);
+  --accent-foreground: #fff;
+  --destructive: #f87171;
+  --border: rgb(255 255 255 / 14%);
+  --input: rgb(255 255 255 / 18%);
+  --ring: var(--liveuta-third-default);
+  --radius: 0.625rem;
+}
+
+:root[color="theme5"] {
+  color-scheme: dark;
+
+  --liveuta-first-25: rgb(37 28 28 / 25%);
+  --liveuta-first-50: rgb(37 28 28 / 50%);
+  --liveuta-first-75: rgb(37 28 28 / 75%);
+  --liveuta-first-95: rgb(37 28 28 / 95%);
+  --liveuta-first-default: #251c1c;
+  --liveuta-first-light: #322929;
+  --liveuta-first-lighter: #3f3636;
+  --liveuta-first-dark: #180f0f;
+  --liveuta-first-darken: #0c0303;
+  --liveuta-second-25: rgb(52 24 9 / 25%);
+  --liveuta-second-50: rgb(52 24 9 / 50%);
+  --liveuta-second-75: rgb(52 24 9 / 75%);
+  --liveuta-second-95: rgb(52 24 9 / 95%);
+  --liveuta-second-default: #341809;
+  --liveuta-second-light: #412516;
+  --liveuta-second-lighter: #4e3223;
+  --liveuta-second-dark: #270b00;
+  --liveuta-second-darken: #1b0000;
+  --liveuta-third-25: rgb(255 0 0 / 25%);
+  --liveuta-third-50: rgb(255 0 0 / 50%);
+  --liveuta-third-75: rgb(255 0 0 / 75%);
+  --liveuta-third-95: rgb(255 0 0 / 95%);
+  --liveuta-third-default: #f00;
+  --liveuta-third-light: #ff0d0d;
+  --liveuta-third-lighter: #ff1a1a;
+  --liveuta-third-dark: #f20000;
+  --liveuta-third-darken: #e60000;
+  --liveuta-fourth-25: rgb(38 38 38 / 25%);
+  --liveuta-fourth-50: rgb(38 38 38 / 50%);
+  --liveuta-fourth-75: rgb(38 38 38 / 75%);
+  --liveuta-fourth-95: rgb(38 38 38 / 95%);
+  --liveuta-fourth-default: #262626;
+  --liveuta-fourth-light: #333;
+  --liveuta-fourth-lighter: #404040;
+  --liveuta-fourth-dark: #191919;
+  --liveuta-fourth-darken: #0d0d0d;
+  --liveuta-backdrop: rgb(255 255 255 / 20%);
+  --liveuta-title: #f00;
+  --liveuta-text-default: #fff;
+  --liveuta-text-invert: #000;
+  --liveuta-text-light: #ccc;
+  --liveuta-text-active: #f00;
+  --liveuta-progress: #577b61;
+  --liveuta-main: #000;
+  --liveuta-card-bg: #262626;
+  --liveuta-schedule-closed: hsl(200 50% 25%);
+  --liveuta-schedule-stream: hsl(45 50% 20%);
+  --liveuta-schedule-stream-text: var(--liveuta-text-default);
+
+  --background: var(--liveuta-main);
+  --foreground: var(--liveuta-text-default);
+  --card: var(--liveuta-card-bg);
+  --card-foreground: var(--foreground);
+  --popover: var(--liveuta-fourth-light);
+  --popover-foreground: var(--foreground);
+  --primary: var(--liveuta-third-default);
+  --primary-foreground: #fff;
+  --secondary: var(--liveuta-second-default);
+  --secondary-foreground: #fff;
+  --muted: var(--liveuta-fourth-default);
+  --muted-foreground: #ccc;
+  --accent: var(--liveuta-first-light);
+  --accent-foreground: #fff;
+  --destructive: #f87171;
+  --border: rgb(255 255 255 / 14%);
+  --input: rgb(255 255 255 / 18%);
+  --ring: var(--liveuta-third-default);
+  --radius: 0.625rem;
 }
 
 @layer base {
@@ -103,27 +455,23 @@
   body {
     margin: 0;
     overflow-x: hidden;
-    @apply font-sans text-foreground antialiased;
+    @apply bg-background font-sans text-foreground antialiased;
   }
 
   a {
-    color: var(--brand-strong);
-    text-decoration-color: color-mix(
-      in oklab,
-      var(--brand-strong) 38%,
-      transparent
-    );
+    color: var(--primary);
+    text-decoration-color: color-mix(in oklab, var(--primary) 38%, transparent);
     text-decoration-thickness: 1px;
     text-underline-offset: 2px;
   }
 
   a:hover {
-    color: var(--brand);
+    color: color-mix(in oklab, var(--primary) 78%, var(--foreground));
   }
 
   code {
     border: 1px solid var(--border);
-    border-radius: 0.45rem;
+    border-radius: var(--radius-sm);
     background: var(--muted);
     padding: 0.125rem 0.45rem;
     font-size: 0.9em;

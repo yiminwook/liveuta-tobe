@@ -338,8 +338,12 @@
 - [ ] promise-returning modal stack과 최상단 Escape 동작을 보존한다.
 - [ ] portal z-index, focus trap, outside click, scroll lock을 검증한다.
 - [ ] layout/spacing/typography/simple state는 Tailwind class로 이동한다.
-- [ ] legacy breakpoint를 의도적으로 보존한다: xs 30rem, sm 48rem,
-  md 64rem, lg 74rem, xl 90rem, 2xl 120rem.
+- [x] Tailwind CSS v4 기본 breakpoint를 사용한다: sm 40rem, md 48rem,
+  lg 64rem, xl 80rem, 2xl 96rem. (2026-10-10 사용자 요청으로 기존 xs 및
+  커스텀 breakpoint 보존 결정을 변경. `src/styles.css`에 커스텀 breakpoint 없음.)
+- [x] 기존 theme-v2 색상 팔레트를 shadcn 의미 토큰과 Tailwind `liveuta-*`
+  색상 유틸리티로 연결하고 `theme1`~`theme5`를 `color` 속성으로 적용한다.
+  라운드 토큰은 Tailwind CSS v4 스케일과 `rounded-control/card/panel`을 제공한다.
 - [ ] theme, safe-area, z-index, schedule 상태색을 semantic token으로 옮긴다.
 - [ ] loader keyframe, PiP transform, react-grid-layout, Swiper/OverlayScrollbars
   내부 selector만 최소 global CSS로 남긴다.
