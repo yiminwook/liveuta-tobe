@@ -11,7 +11,7 @@
  * Breakpoints intentionally use Tailwind CSS v4 defaults (sm through 2xl).
  */
 @theme inline {
-  --font-sans: "Pretendard Variable", system-ui, sans-serif;
+  --font-sans: "Pretendard Variable", Pretendard, system-ui, sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
