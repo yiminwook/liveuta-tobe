@@ -1,210 +1,257 @@
-# Liveuta Migration Guide
+# Liveuta 마이그레이션 안내서
 
-This repository is the new Liveuta application. The legacy application at
-`C:\Users\grs04\Desktop\project\liveuta-asis` is a read-only behavioral
-reference. Do not edit the legacy repository, and do not copy Next.js-specific
-implementation patterns into this repository unchanged.
+이 저장소는 새 Liveuta 애플리케이션입니다. 기존 애플리케이션
+`C:\Users\grs04\Desktop\project\liveuta-asis`는 동작을 확인하기 위한 읽기 전용
+참고 자료입니다. 기존 저장소를 수정하지 말고, Next.js 전용 구현 방식을 이 저장소에
+그대로 복사하지 마세요.
 
-## Product and Migration Goal
+## 제품 및 마이그레이션 목표
 
-- Preserve user-visible Liveuta behavior while replacing Next.js App Router
-  with TanStack Start and TanStack Router.
-- Remove the React Server Component architecture. Build with ordinary React
-  components, typed routes, explicit loaders, and clear server/API boundaries.
-- Replace Mantine and SCSS modules with Tailwind CSS v4 and shadcn/ui.
-- Replace Day.js with date-fns and native `Date`.
-- Keep deployment on the existing local Docker/Node.js environment so MongoDB,
-  OracleDB, Firebase Admin, Google APIs, SSR, and HTTP APIs can remain available.
-- Optimize for a small, predictable, AI-friendly codebase rather than recreating
-  Next.js abstractions.
+- Next.js App Router를 TanStack Start와 TanStack Router로 교체하면서 사용자가 보는
+  Liveuta 동작을 보존합니다.
+- React Server Component 구조를 제거합니다. 일반 React 컴포넌트, 타입이 지정된 라우트,
+  명시적인 로더, 분명한 서버/API 경계를 사용합니다.
+- Mantine과 SCSS 모듈을 Tailwind CSS v4와 shadcn/ui로 교체합니다.
+- Day.js를 date-fns와 기본 `Date`로 교체합니다.
+- MongoDB, OracleDB, Firebase Admin, Google API, SSR, HTTP API를 사용할 수 있도록 기존
+  로컬 Docker/Node.js 배포 환경을 유지합니다.
+- Next.js 추상화를 다시 만드는 대신 작고 예측 가능하며 AI가 이해하기 쉬운 코드베이스를
+  지향합니다.
 
-The analyzed source inventory and parity checklist live in
-`docs/liveuta-migration-checklist.md`. Use it as the source of scope when
-writing implementation plans, and update it when a parity decision changes.
+분석된 소스 목록과 동작 동등성 체크리스트는
+`docs/liveuta-migration-checklist.md`에 있습니다. 구현 계획의 범위를 정할 때 이 문서를
+기준으로 삼고, 동작 동등성 결정이 바뀌면 체크리스트도 갱신합니다.
 
 <!-- intent-skills:start -->
-## Skill Loading
+## 스킬 확인 및 사용
 
-Before editing files for a substantial task:
-- Run `npx @tanstack/intent@latest list` from the workspace root to see available local skills.
-- If a listed skill matches the task, run `npx @tanstack/intent@latest load <package>#<skill>` before changing files.
-- Use the loaded `SKILL.md` guidance while making the change.
-- Monorepos: when working across packages, run the skill check from the workspace root and prefer the local skill for the package being changed.
-- Multiple matches: prefer the most specific local skill for the package or concern you are changing; load additional skills only when the task spans multiple packages or concerns.
+중요한 작업을 위해 파일을 수정하기 전에 다음을 수행합니다.
+
+- 작업공간 루트에서 `npx @tanstack/intent@latest list`를 실행해 사용할 수 있는 로컬
+  스킬을 확인합니다.
+- 관련 스킬이 있으면 파일을 수정하기 전에
+  `npx @tanstack/intent@latest load <package>#<skill>`을 실행합니다.
+- 불러온 `SKILL.md` 지침에 따라 변경합니다.
+- 모노레포에서 여러 패키지를 다룰 때는 작업공간 루트에서 스킬을 확인하고 수정 대상
+  패키지에 맞는 로컬 스킬을 우선합니다.
+- 관련 스킬이 여러 개면 수정 주제에 가장 구체적으로 맞는 스킬을 우선하고, 여러 패키지나
+  주제를 함께 다루는 경우에만 추가 스킬을 불러옵니다.
 <!-- intent-skills:end -->
 
-## Project-Local Skill Policy
+## 프로젝트 내부 스킬 정책
 
-- Treat all installed, generated, copied, or downloaded skills as
-  project-scoped resources.
-- Store project skills only inside this repository. Prefer
-  `<project-root>/.agents/skills/` when a tool does not require a different
-  repository-local path.
-- Never write or install skills in user-level or global locations, including
-  `%USERPROFILE%\.codex\skills`, `%USERPROFILE%\.agents\skills`,
-  `$CODEX_HOME/skills`, or any path outside the current repository.
-- Run skill discovery and management commands from the project root. Do not use
-  global skill flags or global-only resolution modes.
-- Before running a command that may persist a skill, verify that its destination
-  is inside this repository. If that cannot be verified, stop and ask.
+- 설치, 생성, 복사, 다운로드한 스킬은 프로젝트 범위의 자료로 취급합니다.
+- 도구가 다른 프로젝트 내부 경로를 요구하지 않는 한 스킬은
+  `<project-root>/.agents/skills/`에 저장합니다.
+- `%USERPROFILE%\.codex\skills`, `%USERPROFILE%\.agents\skills`, `$CODEX_HOME/skills` 등
+  사용자 전역 경로나 현재 저장소 바깥에는 스킬을 쓰거나 설치하지 않습니다.
+- 스킬 검색 및 관리 명령은 프로젝트 루트에서 실행합니다. 전역 설치 옵션이나 전역 전용
+  검색 방식을 사용하지 않습니다.
+- 스킬을 저장할 수 있는 명령을 실행하기 전에 저장 위치가 이 저장소 안인지 확인합니다.
+  확인할 수 없으면 진행을 멈추고 사용자에게 알립니다.
 
-## Target Architecture
+## 문서 언어 및 편집 원칙
 
-### Rendering and routing
+- 이 저장소의 안내 문서와 작업 기록은 한국어로 작성합니다. 명령어, 코드, 경로, 제품명,
+  라이브러리명 등 번역하면 안 되는 기술 표기는 원문 그대로 둡니다.
+- 기존 문서를 수정할 때는 새로 추가하거나 바꾼 문장만 번역하지 말고, 수정 대상 문서
+  전체가 한국어 원칙을 따르는지 확인합니다. 기존 영어 문장이 남아 있으면 함께 한국어로
+  옮깁니다.
+- 문서 수정 후에는 변경된 문서에서 설명 문장이 영어로 남아 있지 않은지 확인합니다.
 
-- Use TanStack Router file routes under `src/routes`. Never edit
-  `src/routeTree.gen.ts` by hand.
-- Do not add `"use client"`, `"use server"`, `server-only`, or imports from
-  `next/*`.
-- TanStack Start SSR, route loaders, server functions, and server routes are
-  allowed; they are not React Server Components. Use each only at an explicit
-  environment boundary.
-- Keep route files thin: validate params/search, preload required data, compose
-  layouts, and render a feature entry component. Put product behavior in
-  `src/features/<feature>/`.
-- Define shareable filters, pagination, sorting, and tabs with Zod-backed
-  `validateSearch`. The URL is their source of truth.
-- Use `beforeLoad` for navigation guards and repeat authorization in the
-  server/API operation. A client redirect is never an authorization boundary.
-- Isolate browser-only packages and APIs such as ReactPlayer, Notification,
-  localStorage, react-grid-layout, and window listeners behind focused
-  components/hooks or `ClientOnly`.
+## 목표 아키텍처
 
-### Server and API boundaries
+### 렌더링 및 라우팅
 
-- Keep existing public HTTP contracts under `/api/*` during migration unless
-  a deliberate versioned API change is documented.
-- Implement HTTP endpoints as TanStack Start server routes. Use
-  `createServerFn` only for app-private RPC behavior that is not consumed by
-  a service worker, external client, OAuth provider, or scheduled job.
-- Components and route loaders must never query OracleDB or MongoDB directly.
-  Call a service through a server route/function so rendering and persistence
-  stay independently testable.
-- Put server-only persistence and integrations in
-  `src/server/<domain>/*.server.ts`; never import those modules from code that
-  can enter the client bundle.
-- Put shared request/response schemas in `src/lib/contracts/`, transport code
-  in `src/lib/api/`, and query definitions next to the owning feature.
-- Never import response types from route handler files. Contracts must be
-  framework- and transport-independent.
-- Parse request bodies, responses, params, search params, cookies, headers, and
-  storage data with Zod at their boundary.
-- Preserve legacy status codes and response shapes while a vertical slice is
-  being migrated. Normalize legacy database field names once in the service or
-  API adapter, not throughout UI components.
-- Use TanStack Query for remote client state. Route loaders may call
-  `queryClient.ensureQueryData`; do not create a competing route-loader cache.
+- `src/routes` 아래에서 TanStack Router 파일 라우트를 사용합니다. `src/routeTree.gen.ts`는
+  직접 수정하지 않습니다.
+- `"use client"`, `"use server"`, npm `server-only` 패키지 또는 `next/*` 가져오기를
+  추가하지 않습니다.
+- TanStack Router 로더는 기본적으로 isomorphic입니다. 최초 요청에서는 서버에서 실행되고,
+  클라이언트 탐색에서는 브라우저에서 실행됩니다. 일반 로더가 양쪽 환경에서 안전하게
+  가져올 수 있는 모듈만 사용하도록 합니다.
+- `clientAxios`를 선택해도 SSR을 끄는 것은 아닙니다. 요청을 클라이언트에서 보내기 위해
+  루트 라우트에 `ssr: false`를 추가하지 않습니다. 사용자가 SSR 비활성화를 명시적으로
+  요청하지 않는 한 SSR을 유지합니다. 루트의 `ssr: false`는 자식 라우트의 SSR도 끄고
+  최초 HTML에서 라우트 데이터를 제거합니다.
+- 특정 라우트를 의도적으로 클라이언트 전용으로 만들 때는 그 라우트에 `ssr: false`를
+  설정하고, 상대 `/api/*` URL과 `clientAxios`로 동일 출처 API를 호출합니다. 해당 로더에
+  `process.env`, `import.meta.env`, `serverAxios`, 서버 함수를 추가하지 않습니다. 루트의
+  `ssr: false`는 자식까지 SSR을 끄므로 가능한 한 더 좁은 라우트 경계를 사용합니다.
+- 환경 전용 모듈에는 `.client.*`와 `.server.*` 파일 접미사를 사용합니다. 클라이언트
+  번들에 포함될 수 있는 라우트, 컴포넌트, 공용 모듈에서 `.server.*` 모듈을 정적으로
+  가져오지 않습니다. 가져오기 보호가 필요하면
+  `@tanstack/react-start/server-only`로 서버 전용 파일을 표시합니다.
+- TanStack Start SSR, 라우트 로더, 서버 함수, 서버 라우트는 사용할 수 있습니다. 다만
+  React Server Component가 아니며, 각 기능은 명확한 환경 경계에서 사용합니다.
+- 라우트 파일은 얇게 유지합니다. 파라미터와 검색 조건을 검증하고, 필요한 데이터를
+  미리 불러오며, 레이아웃을 조합하고 기능 진입 컴포넌트를 렌더링합니다. 제품 동작은
+  `src/features/<feature>/`에 둡니다.
+- 공유할 필터, 페이지네이션, 정렬, 탭 상태는 Zod 기반 `validateSearch`로 정의합니다.
+  URL을 해당 상태의 기준으로 사용합니다.
+- 탐색 가드에는 `beforeLoad`를 사용하고 서버/API 작업에서도 권한을 다시 확인합니다.
+  클라이언트 리다이렉트만으로 권한을 보호할 수 없습니다.
+- ReactPlayer, Notification, localStorage, react-grid-layout, window 이벤트 리스너 등
+  브라우저 전용 패키지와 API는 전용 컴포넌트/훅 또는 `ClientOnly` 뒤에 격리합니다.
 
-### Node.js and Docker
+### 서버 및 API 경계
 
-- The production runtime is Node.js in local Docker. Use the current official
-  TanStack Start Vite + Nitro Node output and start the generated
-  `.output/server/index.mjs`.
-- Keep `Dockerfile` multi-stage, run as a non-root user, copy only runtime
-  output/assets, expose port 3000, and bind the server to `0.0.0.0`.
-- Keep `docker-compose.yml` as the local deployment entry point. Do not add
-  Cloudflare, Wrangler, Pages, or Workers configuration unless the deployment
-  decision changes again.
-- Keep secrets in runtime environment variables or an ignored env file. Never
-  bake secrets into an image, commit them, echo them in logs, or expose them
-  through `VITE_` variables.
-- Reuse established MongoDB and OracleDB connection helpers, but verify
-  connection cleanup, pool behavior, shutdown, and container health before
-  increasing concurrency.
-- A successful Vite development server is not deployment proof. Verify the
-  production image and Compose service with representative document and API
-  requests.
+- 의도적인 버전 API 변경을 문서화하지 않는 한 마이그레이션 중에도 기존 공개 HTTP 계약인
+  `/api/*`를 유지합니다.
+- HTTP 엔드포인트는 TanStack Start 서버 라우트로 구현합니다. 서비스 워커, 외부 클라이언트,
+  OAuth 제공자, 예약 작업에서 사용하지 않는 앱 내부 RPC 동작에만 `createServerFn`을
+  사용합니다.
+- 컴포넌트와 라우트 로더에서 OracleDB나 MongoDB를 직접 조회하지 않습니다. 렌더링과
+  저장소를 독립적으로 테스트할 수 있도록 서버 라우트/함수를 통해 서비스를 호출합니다.
+- 서버 전용 저장소 및 외부 연동 코드는 `src/server/<domain>/*.server.ts`에 둡니다.
+  클라이언트 번들에 포함될 수 있는 코드에서 해당 모듈을 가져오지 않습니다.
+- 공유 요청/응답 스키마는 `src/lib/contracts/`, 전송 코드는 `src/lib/api/`, 쿼리 정의는
+  해당 기능 옆에 둡니다.
+- 공용 타입과 계약은 서버/클라이언트 양쪽에서 가져올 수 있도록 환경 중립적으로
+  작성합니다. 타입 전용 모듈에는 서버/브라우저 API, 환경별 모듈, 부수 효과가 있는
+  런타임 가져오기를 넣지 않습니다. 서버 전용 또는 브라우저 전용 구현 파일에서 타입을
+  가져오지 말고 `src/lib/contracts/` 또는 별도의 공용 타입 파일에 둡니다.
+- 애플리케이션 HTTP 요청에는 Axios를 사용합니다. 공유 인스턴스는 두 개만 둡니다.
+  브라우저에서 안전한 요청용 `clientAxios`는 `src/lib/api/axios-client.ts`에,
+  서버 연동용 `serverAxios`는 `src/lib/api/axios-server.server.ts`에 둡니다.
+  인터셉터에서 요청/응답 오류를 처리하고 구조화된 오류 로그를 남기되 자격 증명, 서명,
+  비밀 헤더는 기록하지 않습니다.
+- 앱의 공개 HTTP API를 조회하는 라우트 로더는 양쪽 환경에서 `clientAxios`를 사용합니다.
+  브라우저에서는 상대 동일 출처 URL을, SSR 중에는 절대 `VITE_SITE_URL` 출처를 사용합니다.
+  로더에서 `serverAxios`나 서버 전용 헬퍼를 가져오지 않습니다. `/api/v1/channel` 같은
+  API 경로를 유지합니다.
+- 공유 채널명 캐시의 TTL은 30분으로 유지하고 명시적으로 무효화할
+  `clearChannelCache()`를 제공합니다. 라우트 모듈에서 서버 데이터 헬퍼를 직접 가져오지
+  말고 사이트의 `/api/v1/channel` HTTP 엔드포인트로 채널명을 불러옵니다.
+- 서버 함수는 클라이언트에서 안전하게 가져올 수 있는 `*.functions.ts`에 두고, 저장소
+  접근이나 비밀값을 사용하는 구현은 `*.server.ts`에 둡니다. TanStack `createServerFn`
+  경계를 통해서만 서버 구현을 가져옵니다. 가져오기 보호에는
+  `@tanstack/react-start/server-only`를 사용합니다. React Server Component 런타임을
+  전제로 하는 npm `server-only` 패키지는 사용하지 않습니다.
+- 공개 Vite 환경 변수에는 `VITE_` 접두사를 사용합니다. 기존 `NEXT_PUBLIC_` 이름은
+  `VITE_`로 바꿉니다. 비밀값을 `VITE_` 변수에 넣지 않습니다.
+- 응답 타입을 라우트 핸들러 파일에서 가져오지 않습니다. 계약은 프레임워크와 전송 방식에
+  독립적으로 유지합니다.
+- 요청 본문, 응답, 파라미터, 검색 파라미터, 쿠키, 헤더, 저장소 데이터는 경계에서 Zod로
+  파싱합니다.
+- 세로 기능 단위를 마이그레이션하는 동안 기존 상태 코드와 응답 형식을 유지합니다.
+  레거시 데이터베이스 필드명은 UI 곳곳에서 처리하지 말고 서비스나 API 어댑터에서 한 번
+  정규화합니다.
+- 클라이언트 원격 상태에는 TanStack Query를 사용합니다. 라우트 로더에서
+  `queryClient.ensureQueryData`를 호출할 수 있지만 별도의 라우트 로더 캐시를 만들지
+  않습니다.
 
-## UI and Styling
+### Node.js 및 Docker
 
-- Tailwind CSS v4 is the default for layout, spacing, typography, color,
-  responsive behavior, and simple interaction states.
-- shadcn/ui source components live under `src/components/ui/`. Keep them
-  generic; domain composition belongs in `src/features/` or
-  `src/components/`.
-- Use the shared `cn` helper for conditional classes. Do not introduce CSS
-  Modules, Sass, CSS-in-JS, Mantine, or another component system.
-- Store stable semantic tokens in `src/styles.css` with `@theme` and CSS
-  variables. Preserve the legacy `theme1` through `theme5` storage contract
-  until a tested migration is introduced.
-- Keep plain global CSS only for resets, theme variables, keyframes,
-  browser/vendor selectors, or third-party DOM that cannot be styled cleanly
-  with utilities.
-- Do not replace one opaque SCSS class with one opaque custom utility. Delete a
-  legacy stylesheet only after responsive, theme, hover, focus, disabled,
-  loading, and reduced-motion behavior is verified.
-- Use accessible shadcn primitives and preserve keyboard operation, visible
-  focus, labels, roles, portal stacking, and scroll locking.
+- 프로덕션은 로컬 Docker의 Node.js에서 실행합니다. 공식 TanStack Start Vite + Nitro의
+  Node 출력을 사용하고 생성된 `.output/server/index.mjs`를 시작합니다.
+- `Dockerfile`은 다단계 빌드로 유지하고, 비루트 사용자로 실행하며, 런타임 출력물과
+  에셋만 복사하고, 포트 3000을 열고, `0.0.0.0`에 바인딩합니다.
+- 로컬 배포 진입점은 `docker-compose.yml`로 유지합니다. 배포 결정이 다시 바뀌지 않는 한
+  Cloudflare, Wrangler, Pages, Workers 설정을 추가하지 않습니다.
+- 비밀값은 런타임 환경 변수나 Git에서 제외된 환경 파일에 둡니다. 이미지에 포함하거나
+  커밋하거나 로그에 출력하거나 `VITE_` 변수로 노출하지 않습니다.
+- 기존 MongoDB 및 OracleDB 연결 헬퍼를 재사용하되 동시성을 높이기 전에 연결 종료, 풀 동작,
+  종료 처리, 컨테이너 상태 확인을 검증합니다.
+- Vite 개발 서버가 성공적으로 실행되는 것만으로 배포를 검증했다고 보지 않습니다.
+  대표 문서 및 API 요청으로 프로덕션 이미지와 Compose 서비스를 확인합니다.
 
-## Dates and Localization
+## UI 및 스타일
 
-- Use date-fns functions and native `Date`; do not add Day.js, Moment, or a
-  mutable date wrapper.
-- Keep wire/storage timestamps as ISO 8601 strings or documented epoch values.
-  Convert at the boundary and never rely on ambiguous implicit string parsing.
-- Pass `date-fns/locale` explicitly: `ko`, `enUS`, or `ja`. Never mutate
-  a global date locale.
-- Translate Day.js tokens intentionally: `YYYY -> yyyy`, `DD -> dd`,
-  `ddd -> EEE`, and `A -> a`.
-- shadcn Calendar is based on `react-day-picker`, not `react-calendar`.
-  Add it only when a migrated feature actually needs a calendar/date picker.
-- Preserve `ko`, `en`, and `ja`, with `ko` as fallback. Route-visible
-  product text must come from locale resources.
+- 레이아웃, 간격, 글꼴, 색상, 반응형 동작, 단순한 상호작용 상태에는 Tailwind CSS v4를
+  기본으로 사용합니다.
+- shadcn/ui 원본 컴포넌트는 `src/components/ui/`에 둡니다. 범용성을 유지하고 도메인별
+  조합은 `src/features/`나 `src/components/`에 둡니다.
+- 조건부 클래스에는 공용 `cn` 헬퍼를 사용합니다. CSS Modules, Sass, CSS-in-JS, Mantine,
+  다른 컴포넌트 시스템을 추가하지 않습니다.
+- 안정적인 의미 토큰은 `src/styles.css`의 `@theme`과 CSS 변수로 저장합니다. 테스트된
+  마이그레이션이 도입될 때까지 기존 `theme1`부터 `theme5`까지의 저장 계약을 보존합니다.
+- 전역 CSS는 초기화, 테마 변수, 키프레임, 브라우저/벤더 선택자 또는 유틸리티로 깔끔하게
+  스타일링할 수 없는 서드파티 DOM에만 사용합니다.
+- 불투명한 SCSS 클래스 하나를 불투명한 사용자 정의 유틸리티 하나로 바꾸지 않습니다.
+  반응형, 테마, hover, focus, disabled, loading, reduced-motion 동작을 확인한 뒤에만
+  레거시 스타일시트를 삭제합니다.
+- 접근성 있는 shadcn 프리미티브를 사용하고 키보드 조작, 표시되는 포커스, 레이블, 역할,
+  포털 쌓임 순서, 스크롤 잠금을 보존합니다.
 
-## State and Cross-Cutting Behavior
+## 날짜 및 현지화
 
-- Use Zustand or React context only for genuinely shared client state: player,
-  session, modal stack, command palette, and shell state. Keep local UI state
-  local.
-- Preserve the legacy player/PiP, modal promise, hotkey, service-worker,
-  notification, analytics, error-reporting, and five-theme contracts through
-  focused adapters and behavior tests.
-- Do not copy known legacy security defects. In particular, add runtime input
-  validation, endpoint authorization, object ownership checks, OAuth state,
-  verification-code rate limits, and protected cache invalidation.
-- Development-only pages and diagnostics must be disabled or guarded in
-  production.
+- date-fns 함수와 기본 `Date`를 사용합니다. Day.js, Moment, 변경 가능한 날짜 래퍼를
+  추가하지 않습니다.
+- 전송/저장 시각은 ISO 8601 문자열 또는 문서화된 epoch 값으로 유지합니다. 경계에서
+  변환하며 모호한 암시적 문자열 파싱에 의존하지 않습니다.
+- `date-fns/locale`의 `ko`, `enUS`, `ja`를 명시적으로 전달합니다. 전역 날짜 로케일을
+  변경하지 않습니다.
+- Day.js 토큰을 의도적으로 변환합니다. `YYYY -> yyyy`, `DD -> dd`, `ddd -> EEE`,
+  `A -> a`입니다.
+- shadcn Calendar는 `react-calendar`가 아니라 `react-day-picker`를 기반으로 합니다.
+  마이그레이션 중인 기능에 달력/날짜 선택기가 실제로 필요할 때만 추가합니다.
+- `ko`, `en`, `ja`를 보존하고 기본 언어는 `ko`로 둡니다. 라우트에 표시되는 제품 문구는
+  로케일 리소스에서 가져옵니다.
 
-## Migration Workflow
+## 상태 및 공통 동작
 
-- Migrate by vertical slice: characterization test -> contract/service -> route
-  and search schema -> feature UI -> visual/E2E verification -> checklist update.
-- Treat `liveuta-asis` behavior, screenshots in `liveuta-asis/doc/`, and
-  locale messages as acceptance references. Preserve behavior intentionally,
-  not implementation bugs.
-- Prefer shared foundations in this order: runtime/API contracts, locale and
-  five-theme shell, shadcn primitives, date utilities, then product pages.
-- Copy public assets only when a migrated slice uses them. Preserve attribution
-  and avoid copying obsolete build artifacts.
-- Remove starter/demo code and old dependencies only after replacement behavior
-  passes. Do not delete the legacy deployment until production parity is proven.
-- Keep commits small and feature-focused. Do not combine a visual redesign with
-  a framework migration unless explicitly requested.
+- Zustand나 React context는 플레이어, 세션, 모달 스택, 명령 팔레트, 셸 상태처럼 실제로
+  공유되는 클라이언트 상태에만 사용합니다. 로컬 UI 상태는 해당 컴포넌트에 둡니다.
+- 레거시 플레이어/PiP, 모달 promise, 단축키, 서비스 워커, 알림, 분석, 오류 보고,
+  5개 테마 계약은 전용 어댑터와 동작 테스트로 보존합니다.
+- 알려진 레거시 보안 결함은 복사하지 않습니다. 특히 런타임 입력 검증, 엔드포인트 권한
+  확인, 객체 소유권 확인, OAuth state, 인증 코드 요청 제한, 보호된 캐시 무효화를
+  추가합니다.
+- 개발 전용 페이지와 진단 기능은 프로덕션에서 비활성화하거나 접근을 제한합니다.
 
-## TDD and Testing Policy
+## 마이그레이션 작업 흐름
 
-- Use test-driven development for behavior changes: write a meaningful failing
-  test first, run it and confirm the expected failure, implement the smallest
-  change, then refactor while keeping the suite green.
-- Use Vitest for unit/integration tests and Playwright for route-level parity
-  flows once it is added.
-- Test every extracted React component and custom hook by default in jsdom
-  through rendered behavior rather than implementation details.
-- Keep static imports as the default. Dynamic `import()` in tests is allowed
-  only for pure utilities, never components, hooks, or integrations.
-- Avoid Node `fs` APIs when imported fixtures, in-memory data, dependency
-  injection, MSW, or public interfaces can express the behavior.
-- Mock only true external boundaries, nondeterminism, or expensive
-  collaborators. Prefer real internal modules and user-visible outcomes.
-- Add contract tests for every migrated API and route tests for search parsing,
-  locale redirects, auth guards, loading, empty, error, and success states.
-- Every migrated product route needs a Playwright happy path. Critical flows
-  cover schedule filters, favorite/block, sign-in, setlist CRUD, PiP
-  continuity, and direct navigation to nested URLs.
+- 세로 기능 단위로 마이그레이션합니다. 동작 특성화 테스트 -> 계약/서비스 -> 라우트 및
+  검색 스키마 -> 기능 UI -> 시각/E2E 확인 -> 체크리스트 갱신 순서로 진행합니다.
+- `liveuta-asis` 동작, `liveuta-asis/doc/`의 스크린샷, 로케일 메시지를 승인 기준으로
+  사용합니다. 구현 버그가 아니라 의도한 동작을 보존합니다.
+- 공통 기반은 런타임/API 계약, 로케일과 5개 테마 셸, shadcn 프리미티브, 날짜 유틸리티,
+  제품 페이지 순서로 우선합니다.
+- 마이그레이션 중인 기능에서 사용하는 공개 에셋만 복사합니다. 출처를 보존하고 오래된
+  빌드 결과물은 복사하지 않습니다.
+- 대체 동작이 통과한 뒤에만 시작 화면/데모 코드와 이전 의존성을 제거합니다. 프로덕션
+  동등성이 입증되기 전에는 레거시 배포를 삭제하지 않습니다.
+- 커밋은 작고 기능 중심으로 유지합니다. 명시적 요청이 없는 한 시각적 재설계와 프레임워크
+  마이그레이션을 한 번에 진행하지 않습니다.
+- 사용자가 “커밋해”, “이 변경을 커밋해”처럼 실제 커밋 실행을 명확히 요청한 경우에만
+  `git commit`을 실행합니다. “커밋 작성”, “커밋 메시지 작성”, “커밋 정리”는 변경 요약과
+  메시지 초안 작성으로 해석하며 실행 권한으로 간주하지 않습니다.
+- 명시적 실행 요청이 없으면 `git commit`, `git commit --amend`, `git rebase` 등 커밋 기록을
+  만드는 명령이나 바꾸는 명령을 실행하지 않습니다. 커밋 취소·수정도 사용자가 따로 요청해야
+  합니다.
+- 실행 요청을 받으면 `git status`와 staged/unstaged diff를 확인하고, 요청된 변경만
+  커밋 대상으로 삼습니다. `git add -A`로 무관한 파일을 함께 스테이징하지 않습니다.
+- 변경이 서로 다른 목적의 작업으로 나뉘면 한 커밋에 임의로 합치지 않습니다. 저장소의
+  최근 커밋 제목 형식을 확인해 따르고, 이 저장소에서는 `Feat:`, `Refactor:`처럼 유형의
+  첫 글자를 대문자로 씁니다. 형식이 불분명하면 메시지 초안까지만 제시합니다.
+- 커밋 전 `git diff --check`와 대상 파일 목록을 확인하고, 커밋 후에는 `git show --stat`과
+  `git status`로 결과 및 남은 변경을 확인합니다.
 
-## Verification and Definition of Done
+## TDD 및 테스트 정책
 
-Run affected tests during red-green-refactor, then run:
+- 동작을 변경할 때 테스트 주도 개발을 사용합니다. 의미 있는 실패 테스트를 먼저 작성하고,
+  기대한 대로 실패하는지 실행한 뒤 최소한의 변경을 구현하고 테스트를 통과시키며
+  리팩터링합니다.
+- 단위/통합 테스트에는 Vitest를, 추가된 뒤 라우트 동등성 흐름에는 Playwright를
+  사용합니다.
+- 별도로 요청받지 않는 한 분리한 모든 React 컴포넌트와 사용자 정의 훅은 구현 세부사항이
+  아닌 렌더링 결과를 기준으로 jsdom에서 테스트합니다.
+- 기본적으로 정적 가져오기를 사용합니다. 테스트의 동적 `import()`는 순수 유틸리티에만
+  허용하며 컴포넌트, 훅, 연동 코드에는 사용하지 않습니다.
+- 가져온 픽스처, 메모리 데이터, 의존성 주입, MSW, 공개 인터페이스로 표현할 수 있으면
+  Node `fs` API를 사용하지 않습니다.
+- 실제 외부 경계, 비결정성, 비용이 큰 협력자만 모킹합니다. 내부 모듈은 실제로 사용하는
+  방식을 우선합니다.
+- 마이그레이션하는 모든 API에 계약 테스트를 추가하고 검색 조건 파싱, 로케일 리다이렉트,
+  인증 가드, loading, empty, error, success 상태를 라우트 테스트로 확인합니다.
+- 마이그레이션하는 모든 제품 라우트에 Playwright 정상 흐름을 추가합니다. 주요 흐름에는
+  스케줄 필터, 즐겨찾기/차단, 로그인, 세트리스트 CRUD, PiP 연속성, 중첩 URL 직접 이동을
+  포함합니다.
+
+## 검증 및 완료 기준
+
+TDD의 red-green-refactor 과정에서 영향받은 테스트를 실행한 뒤 다음을 수행합니다.
 
 ```powershell
 pnpm test
@@ -215,17 +262,16 @@ docker compose up -d
 docker compose ps
 ```
 
-Smoke-test `/`, a locale route, a nested route refresh, one static asset, and
-every changed API. Stop the Compose service after verification if the user does
-not want it left running. Also run `git diff --check`.
+`/`, 로케일 경로, 중첩 경로 새로고침, 정적 에셋 하나, 변경된 모든 API를 스모크
+테스트합니다. 사용자가 서비스를 계속 실행해 두길 원하지 않으면 검증 뒤 Compose 서비스를
+중지합니다. `git diff --check`도 실행합니다.
 
-A migration item is complete only when:
+마이그레이션 항목은 다음을 모두 만족해야 완료입니다.
 
-- its legacy-visible behavior and responsive states are checked against the
-  migration inventory;
-- loading, empty, error, unauthenticated, and authorized states are handled;
-- no Next.js, Mantine, SCSS, or Day.js dependency leaked into the migrated slice;
-- keyboard and focus behavior remain usable;
-- relevant Vitest and Playwright tests pass;
-- type checking, production build, and Docker smoke checks pass; and
-- the migration checklist is updated with evidence, not only a checked box.
+- 마이그레이션 목록을 기준으로 레거시에서 보이는 동작과 반응형 상태를 확인했습니다.
+- loading, empty, error, unauthenticated, authorized 상태를 처리합니다.
+- 마이그레이션한 기능에 Next.js, Mantine, SCSS, Day.js 의존성이 들어오지 않았습니다.
+- 키보드 조작과 포커스를 사용할 수 있습니다.
+- 관련 Vitest 및 Playwright 테스트가 통과합니다.
+- 타입 검사, 프로덕션 빌드, Docker 스모크 검증이 통과합니다.
+- 체크리스트를 단순히 완료 표시하는 데 그치지 않고 근거와 함께 갱신했습니다.
