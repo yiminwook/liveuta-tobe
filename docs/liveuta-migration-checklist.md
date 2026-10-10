@@ -74,17 +74,18 @@
 
 ### 일정 `/{locale}/schedule`
 
-- [ ] `q` 검색어를 URL 상태로 사용한다.
-- [ ] `t=scheduled|live|daily|all`을 검증하고 기본값을 `scheduled`로 한다.
+- [x] `q` 검색어를 URL 상태로 사용한다. `/schedule`에서 검색어를 제출하면 URL 검색 조건으로 저장한다.
+- [x] `t=scheduled|live|daily|all`을 검증하고 기본값을 `scheduled`로 한다. 허용되지 않은 값은 `scheduled`로 보정한다.
 - [ ] `isFavorite=true` 필터를 복원한다.
-- [ ] `select=all|stream|video` 사용자 설정을 영속화한다.
+- [x] `select=all|stream|video` 선택 상태를 URL 검색 조건으로 보존한다.
 - [ ] 전체/방송/영상별 개수를 정확히 표시한다.
 - [ ] blacklist 채널을 기본 목록에서 제외한다.
 - [ ] favorite 필터와 blacklist 조합을 검증한다.
 - [ ] 자동 동기화 on/off와 선택 간격을 반영한다.
-- [ ] Virtuoso 기반 가상 목록/추가 로딩 동작을 보존한다.
-- [ ] 카드의 새 창, 복사, 즐겨찾기, 차단, 알림 기능을 보존한다.
-- [ ] 검색 결과가 없을 때 channel 검색 링크를 제공한다.
+- [x] Virtuoso 기반 가상 목록/추가 로딩 동작을 보존한다. 기존 전체 목록 응답에서 24개씩 표시하고 목록 끝에서 추가한다.
+- [x] 카드를 새 창으로 열고 방송 링크를 복사한다.
+- [ ] 카드의 즐겨찾기, 차단, 알림 기능을 보존한다.
+- [x] 검색 결과가 없을 때 channel 검색 링크를 제공한다.
 - [ ] live 탭의 inline player와 YouTube chat을 복원한다.
 - [ ] inline player가 viewport를 벗어날 때 PiP와 중복되지 않게 처리한다.
 

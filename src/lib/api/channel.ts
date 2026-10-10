@@ -1,5 +1,5 @@
 import { clientAxios } from '@/lib/api/axios-client'
-import type { TEndpointChannel } from '@/lib/contracts/channel'
+import type { TEndpointChannel } from '@/lib/endpoint/type'
 
 const CHANNEL_TTL_MS = 30 * 60 * 1000
 let cachedChannels: { value: string[]; expiresAt: number } | undefined

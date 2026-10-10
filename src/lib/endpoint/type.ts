@@ -1,12 +1,19 @@
 import { ITEMS_PER_PAGE } from '@/constants';
-import type dayjs from '@/libraries/dayjs';
 import { CHANNEL_QUERY_TYPE, CHANNEL_SORT } from '@/types';
 import z from 'zod';
-import { getChannelWithYoutube, parseChannel } from './service';
 import { youtube_v3 } from 'googleapis';
-import type { TEndpointChannel } from '@/lib/contracts/channel';
 
-export type { TEndpointChannel } from '@/lib/contracts/channel';
+export interface TEndpointChannel {
+  channel_id: string;
+  name_kor: string;
+  channel_addr: string;
+  handle_name: string;
+  createdAt: string;
+  waiting: boolean;
+  alive: boolean;
+  names: string[];
+  profile_picture_url: string;
+}
 
 export type TContentLength = {
   total: number;
@@ -99,12 +106,21 @@ export type TParsedClientContent = {
   // 가공된 데이터
   title: string;
   viewer: number;
-  utcTime: dayjs.Dayjs;
+  utcTime: Date;
   interval: string;
 };
 
-export type TYChannelReturn = ReturnType<typeof getChannelWithYoutube>;
-export type ChannelDatesetItem = ReturnType<typeof parseChannel>;
+export type TYChannelReturn =  Promise<{
+  contents: any;
+  total: number;
+  totalPage: number;
+}>;
+
+export type ChannelDatesetItem = {
+  channelId: string;
+  channelAddr: string;
+  nameKor: string;
+};
 
 export type TEndpointSearchResponse = {
   data: TEndpointChannel[];

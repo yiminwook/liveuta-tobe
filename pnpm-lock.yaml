@@ -119,6 +119,9 @@ importers:
       react-player:
         specifier: 2.16.1
         version: 2.16.1(react@19.2.8)
+      react-virtuoso:
+        specifier: ^4.18.16
+        version: 4.18.16(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       shadcn:
         specifier: ^4.6.0
         version: 4.21.0(typescript@6.0.3)
@@ -3166,6 +3169,12 @@ packages:
     peerDependenciesMeta:
       react-dom:
         optional: true
+
+  react-virtuoso@4.18.16:
+    resolution: {integrity: sha512-BumVOhd0mNKlBkqeHojlLP8IRlJ2oYU7haU92GvBSlSzcdlWUAxIu1gphKm5gLQm07gMzmoQRXdVQeiG4TKSeQ==}
+    peerDependencies:
+      react: '>=16 || >=17 || >= 18 || >= 19'
+      react-dom: '>=16 || >=17 || >= 18 || >=19'
 
   react@19.2.8:
     resolution: {integrity: sha512-PWaYA1L/q9u2u7xYQi+Y3L3Yfnie7XyLeaJICV1MGD6LprsBxcAqGjYyr0eY3p+QdsA+x/Irkt4Qif8D63+Sbw==}
@@ -6701,6 +6710,11 @@ snapshots:
     dependencies:
       react: 19.2.8
     optionalDependencies:
+      react-dom: 19.2.8(react@19.2.8)
+
+  react-virtuoso@4.18.16(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+    dependencies:
+      react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
 
   react@19.2.8: {}

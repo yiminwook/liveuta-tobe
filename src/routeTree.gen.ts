@@ -11,8 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as ApiHelloRouteImport } from './routes/api/hello'
 import { Route as ApiV1ChannelRouteImport } from './routes/api/v1/channel'
+import { Route as ApiV1ScheduleRouteImport } from './routes/api/v1/schedule'
 import { Route as ApiV1ChannelCheckDuplicatesRouteImport } from './routes/api/v1/channel/check-duplicates'
 import { Route as ApiV1ChannelCountRouteImport } from './routes/api/v1/channel/count'
 import { Route as ApiV1ChannelRequestsRouteImport } from './routes/api/v1/channel/requests'
@@ -29,6 +31,11 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ScheduleRoute = ScheduleRouteImport.update({
+  id: '/schedule',
+  path: '/schedule',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiHelloRoute = ApiHelloRouteImport.update({
   id: '/api/hello',
   path: '/api/hello',
@@ -37,6 +44,11 @@ const ApiHelloRoute = ApiHelloRouteImport.update({
 const ApiV1ChannelRoute = ApiV1ChannelRouteImport.update({
   id: '/api/v1/channel',
   path: '/api/v1/channel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1ScheduleRoute = ApiV1ScheduleRouteImport.update({
+  id: '/api/v1/schedule',
+  path: '/api/v1/schedule',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiV1ChannelCheckDuplicatesRoute =
@@ -69,8 +81,10 @@ const ApiV1LogErrorRoute = ApiV1LogErrorRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/schedule': typeof ScheduleRoute
   '/api/hello': typeof ApiHelloRoute
   '/api/v1/channel': typeof ApiV1ChannelRouteWithChildren
+  '/api/v1/schedule': typeof ApiV1ScheduleRoute
   '/api/v1/channel/check-duplicates': typeof ApiV1ChannelCheckDuplicatesRoute
   '/api/v1/channel/count': typeof ApiV1ChannelCountRoute
   '/api/v1/channel/requests': typeof ApiV1ChannelRequestsRoute
@@ -80,8 +94,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/schedule': typeof ScheduleRoute
   '/api/hello': typeof ApiHelloRoute
   '/api/v1/channel': typeof ApiV1ChannelRouteWithChildren
+  '/api/v1/schedule': typeof ApiV1ScheduleRoute
   '/api/v1/channel/check-duplicates': typeof ApiV1ChannelCheckDuplicatesRoute
   '/api/v1/channel/count': typeof ApiV1ChannelCountRoute
   '/api/v1/channel/requests': typeof ApiV1ChannelRequestsRoute
@@ -92,8 +108,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/schedule': typeof ScheduleRoute
   '/api/hello': typeof ApiHelloRoute
   '/api/v1/channel': typeof ApiV1ChannelRouteWithChildren
+  '/api/v1/schedule': typeof ApiV1ScheduleRoute
   '/api/v1/channel/check-duplicates': typeof ApiV1ChannelCheckDuplicatesRoute
   '/api/v1/channel/count': typeof ApiV1ChannelCountRoute
   '/api/v1/channel/requests': typeof ApiV1ChannelRequestsRoute
@@ -105,8 +123,10 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/schedule'
     | '/api/hello'
     | '/api/v1/channel'
+    | '/api/v1/schedule'
     | '/api/v1/channel/check-duplicates'
     | '/api/v1/channel/count'
     | '/api/v1/channel/requests'
@@ -116,8 +136,10 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/schedule'
     | '/api/hello'
     | '/api/v1/channel'
+    | '/api/v1/schedule'
     | '/api/v1/channel/check-duplicates'
     | '/api/v1/channel/count'
     | '/api/v1/channel/requests'
@@ -127,8 +149,10 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/schedule'
     | '/api/hello'
     | '/api/v1/channel'
+    | '/api/v1/schedule'
     | '/api/v1/channel/check-duplicates'
     | '/api/v1/channel/count'
     | '/api/v1/channel/requests'
@@ -139,8 +163,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ScheduleRoute: typeof ScheduleRoute
   ApiHelloRoute: typeof ApiHelloRoute
   ApiV1ChannelRoute: typeof ApiV1ChannelRouteWithChildren
+  ApiV1ScheduleRoute: typeof ApiV1ScheduleRoute
   ApiV1LogErrorRoute: typeof ApiV1LogErrorRoute
 }
 
@@ -160,6 +186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/schedule': {
+      id: '/schedule'
+      path: '/schedule'
+      fullPath: '/schedule'
+      preLoaderRoute: typeof ScheduleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/hello': {
       id: '/api/hello'
       path: '/api/hello'
@@ -172,6 +205,13 @@ declare module '@tanstack/react-router' {
       path: '/api/v1/channel'
       fullPath: '/api/v1/channel'
       preLoaderRoute: typeof ApiV1ChannelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/schedule': {
+      id: '/api/v1/schedule'
+      path: '/api/v1/schedule'
+      fullPath: '/api/v1/schedule'
+      preLoaderRoute: typeof ApiV1ScheduleRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/v1/channel/check-duplicates': {
@@ -233,8 +273,10 @@ const ApiV1ChannelRouteWithChildren = ApiV1ChannelRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ScheduleRoute: ScheduleRoute,
   ApiHelloRoute: ApiHelloRoute,
   ApiV1ChannelRoute: ApiV1ChannelRouteWithChildren,
+  ApiV1ScheduleRoute: ApiV1ScheduleRoute,
   ApiV1LogErrorRoute: ApiV1LogErrorRoute,
 }
 export const routeTree = rootRouteImport
