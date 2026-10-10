@@ -37,9 +37,9 @@ function ScheduleRoute() {
 function ScheduleError({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <main className="mx-auto grid min-h-[55vh] max-w-xl content-center justify-items-center px-4 text-center">
-      <h1 className="mb-2 text-2xl font-black text-foreground">?§Ï?Ï§ÑÏùÑ Î∂àÎü¨?§Ï? Î™ªÌñà?µÎãà??/h1>
+      <h1 className="mb-2 text-2xl font-black text-foreground">{'\uC77C\uC815\uC744 \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.'}</h1>
       <p className="mb-5 text-sm text-muted-foreground">{error.message}</p>
-      <button type="button" onClick={reset} className="min-h-11 rounded-control bg-primary px-5 font-bold text-primary-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">?§Ïãú ?úÎèÑ</button>
+      <button type="button" onClick={reset} className="min-h-11 rounded-control bg-primary px-5 font-bold text-primary-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">{'\uB2E4\uC2DC \uC2DC\uB3C4'}</button>
     </main>
   )
 }
